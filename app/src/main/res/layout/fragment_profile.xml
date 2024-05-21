@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.profile.ProfileFragment">
+    <!-- Auto layout, variables, and unit scale are not yet supported -->
+    <TextView
+        android:id="@+id/fragment_profile_username"
+        android:layout_width="310dp"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="64dp"
+        android:text="@string/nguy_n_h_i_"
+        android:textSize="28sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:textFontWeight="700"
+        android:gravity="center_vertical"
+        />
+    <TextView
+        android:id="@+id/fragment_profile_change_password"
+        android:layout_width="310dp"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="117dp"
+        android:text="Thay đổi mật khẩu"
+        android:textSize="24sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:textFontWeight="700"
+        android:gravity="center_vertical"
+        />
+    <TextView
+        android:id="@+id/fragment_profile_history"
+        android:layout_width="310dp"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="170dp"
+        android:text="Lịch sử giao dịch"
+        android:textSize="24sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:textFontWeight="700"
+        android:gravity="center_vertical"
+        />
+    </RelativeLayout>

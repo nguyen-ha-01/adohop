@@ -1,0 +1,148 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="334dp"
+    android:layout_height="wrap_content"
+
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/back_ticket"
+
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="6dp"
+        android:padding="12dp"
+        android:paddingTop="6dp"
+        android:orientation="vertical"
+
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="7dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_gravity="left|top"
+                android:text="Date: "
+                android:height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="#B3000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_doi_date"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_gravity="left|top"
+                android:text="12/09/2024"
+                android:height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="#B3000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:paddingBottom="7dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="Mã nhận đồ: "
+                android:height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_doi_ma_nhan_do"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="MX20240012"
+                android:height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingBottom="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/item_doi_name_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="Bộ đồ quốc phòng"
+                android:height="22dp"
+                android:width="120dp"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_doi_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="size 40"
+                android:height="22dp"
+                android:width="55dp"
+                android:gravity="end|center_vertical"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_doi_product_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="x1"
+                android:height="22dp"
+                android:width="55dp"
+                android:gravity="end|center_horizontal"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:paddingBottom="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="Đã thanh toán: "
+                android:height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/item_doi_da_thanh_toan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:text="90.000 vnd"
+                android:height="22dp"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textFontWeight="300"
+                android:textSize="14sp"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

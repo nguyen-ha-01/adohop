@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+
+    app:startDestination="@id/fragment_home">
+
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="com.apolom.aodoshop.fragments.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragment_home_to_detailThueFragment"
+            app:destination="@id/detailThueFragment" />
+        <action
+            android:id="@+id/action_fragment_home_to_muaFragment"
+            app:destination="@id/muaFragment" />
+        <action
+            android:id="@+id/action_fragment_home_to_napTienFragment"
+            app:destination="@id/napTienFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dptcDaNhanFragment"
+        android:name="com.apolom.aodoshop.fragments.dptc_da_nhan.DptcDaNhanFragment"
+        android:label="fragment_dptc_da_nhan"
+        tools:layout="@layout/fragment_dptc_da_nhan" />
+    <fragment
+        android:id="@+id/fragment_profile"
+        android:name="com.apolom.aodoshop.fragments.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/fragment_shop"
+        android:name="com.apolom.aodoshop.fragments.shop.ShopFragment"
+        android:label="fragment_shop"
+        tools:layout="@layout/fragment_shop" />
+    <fragment
+        android:id="@+id/muaFragment"
+        android:name="com.apolom.aodoshop.fragments.mua_detail.MuaFragment"
+        android:label="fragment_mua"
+        tools:layout="@layout/fragment_mua" >
+        <action
+            android:id="@+id/action_muaFragment_to_fragment_home"
+            app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_muaFragment_to_thanhToanThanhCongFragment"
+            app:destination="@id/thanhToanThanhCongFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailThueFragment"
+        android:name="com.apolom.aodoshop.fragments.thue_detail.DetailThueFragment"
+        android:label="fragment_detail_thue"
+        tools:layout="@layout/fragment_detail_thue" />
+    <fragment
+        android:id="@+id/thanhToanThanhCongFragment"
+        android:name="com.apolom.aodoshop.fragments.thanh_toan_thanh_cong.ThanhToanThanhCongFragment"
+        android:label="fragment_thanh_toan_thanh_cong"
+        tools:layout="@layout/fragment_thanh_toan_thanh_cong" >
+        <action
+            android:id="@+id/action_thanhToanThanhCongFragment_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/giaoDichThanhCongItem"
+        android:name="com.apolom.aodoshop.fragments.commons.GiaoDichThanhCongItem"
+        android:label="giao_dich_thanh_cong"
+        tools:layout="@layout/giao_dich_thanh_cong" >
+        <action
+            android:id="@+id/action_giaoDichThanhCongItem_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/napTienFragment"
+        android:name="com.apolom.aodoshop.fragments.nap_tien.NapTienFragment"
+        android:label="fragment_nap_tien"
+        tools:layout="@layout/fragment_nap_tien" >
+        <action
+            android:id="@+id/action_napTienFragment_to_giaoDichThanhCongItem"
+            app:destination="@id/giaoDichThanhCongItem" />
+    </fragment>
+
+</navigation>

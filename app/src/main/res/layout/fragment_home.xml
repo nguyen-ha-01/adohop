@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".fragments.home.HomeFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/back_gradient"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="30dp"
+
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Xin chào, "
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:height="43dp"
+
+                android:textSize="20sp"
+                android:textFontWeight="700"
+                android:layout_marginLeft="20dp"
+
+                android:fontFamily="sans-serif-medium"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/fragment_home_username"
+                android:layout_width="wrap_content"
+                android:text="Nguyen Xuan Ha"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:height="43dp"
+                android:layout_gravity="bottom|left"
+                android:textSize="20sp"
+                android:textFontWeight="700"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Số dư: "
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:height="43dp"
+
+                android:textSize="20sp"
+                android:textFontWeight="700"
+                android:layout_marginLeft="20dp"
+
+                android:fontFamily="sans-serif-medium"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/fragment_home_money"
+                android:layout_width="wrap_content"
+                android:text="200000"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:height="43dp"
+                android:layout_gravity="bottom|left"
+                android:textSize="20sp"
+                android:textFontWeight="700"
+                android:layout_marginLeft="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="vnd"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:height="43dp"
+                android:layout_gravity="bottom|left"
+                android:textSize="20sp"
+                android:textFontWeight="700"
+                android:paddingStart="4dp"
+
+                android:fontFamily="sans-serif-medium"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:height="43dp"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center|end"
+                android:id="@+id/fragment_home_nap_tien"
+
+                android:text="Nạp tiền"
+                android:textColor="#FFFFFF"
+                android:textFontWeight="700"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.apolom.aodoshop.fragments.home.views.ItemHome
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_home_thue"/>
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="53dp"/>
+
+    <com.apolom.aodoshop.fragments.home.views.ItemHome
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_home_mua"/>
+
+
+</LinearLayout>

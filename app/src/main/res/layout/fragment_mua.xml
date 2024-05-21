@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.mua_detail.MuaFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <com.apolom.aodoshop.fragments.commons.app_bar.DetailAppBar
+            android:id="@+id/fragment_mua_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/fragment_mua_img"
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img" />
+
+        <TextView
+            android:id="@+id/fragment_mua_name"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/o_qu_c_ph_n"
+            android:textColor="#040404"
+            android:textFontWeight="700"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/fragment_mua_price"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_marginStart="26dp"
+
+            android:gravity="center_vertical"
+            android:text="@string/price"
+            android:textColor="#040404"
+            android:textFontWeight="400"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/cdp"
+            android:textColor="#040404"
+            android:textFontWeight="700"
+            android:textSize="20sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_mua_sizes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:scrollbars="none"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="start">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:height="38dp"
+                android:layout_marginStart="26dp"
+
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/slc"
+                android:textColor="#040404"
+                android:textFontWeight="700"
+                android:textSize="20sp" />
+
+
+            <!-- Nút giảm số lượng -->
+            <Button
+                android:id="@+id/fragment_mua_decrease"
+                android:layout_width="40dp"
+                android:layout_height="38dp"
+                android:text="-"
+                android:textSize="24sp"
+                android:background="@drawable/icon_minus" />
+
+            <!-- TextView hiển thị số lượng -->
+
+            <TextView
+                android:id="@+id/fragment_mua_so_luong"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:height="38dp"
+                android:layout_marginStart="26dp"
+                android:layout_marginEnd="26dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/count"
+                android:textColor="#040404"
+                android:textFontWeight="700"
+                android:textSize="20sp" />
+
+            <!-- Nút tăng số lượng -->
+            <Button
+                android:id="@+id/fragment_mua_increase"
+                android:layout_width="40dp"
+                android:layout_height="38dp"
+                android:text="+"
+                android:textSize="24sp"
+                android:background="@drawable/icon_plus"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0dp"
+    android:layout_gravity="bottom"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:layout_marginBottom="0dp"
+        android:paddingHorizontal="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="90.000 vnd "
+            android:gravity="center_vertical"
+            android:textSize="38sp"
+            android:textColor="#28386D"
+            android:textFontWeight="700"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"
+
+            />
+        <Button
+            android:id="@+id/fragment_mua_btn_mua"
+            android:layout_width="172dp"
+            android:layout_height="match_parent"
+            android:height="56dp"
+            android:text="thanh toán"
+            app:cornerRadius="14dp"
+            android:textColor="@color/on_primary"
+            android:textSize="28sp"
+            app:rippleColor="@color/primary_indicator"
+            android:backgroundTint="#28386D"
+            />
+
+    </LinearLayout>
+</FrameLayout>
+</FrameLayout>

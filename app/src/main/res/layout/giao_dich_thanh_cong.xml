@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/back_success"
+    tools:context=".fragments.commons.GiaoDichThanhCongItem">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/icon_success"
+        />
+    <TextView
+        android:id="@+id/giao_dich_thanh_cong_message"
+        android:layout_width="wrap_content"
+        android:layout_height="73dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="256dp"
+        android:text="Thanh toán thành công"
+        android:lineHeight="36sp"
+        android:textSize="36sp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="@color/on_primary"
+        android:gravity="center_horizontal|top"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/item_thue_ticket_tra_btn"
+        android:layout_width="314dp"
+        android:layout_height="65dp"
+        android:lineHeight="36sp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal|bottom"
+
+        android:backgroundTint="@color/on_primary"
+        android:text="Hoàn thành"
+        android:textColor="@color/primary"
+        android:textSize="36sp"
+        android:textStyle="bold"
+
+        app:cornerRadius="10dp"
+        app:rippleColor="@color/on_primary"
+
+         />
+
+</FrameLayout>
