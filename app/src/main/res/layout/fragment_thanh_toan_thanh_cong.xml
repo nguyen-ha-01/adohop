@@ -105,7 +105,7 @@
         </FrameLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/item_thue_ticket_tra_btn"
+            android:id="@+id/fragment_tttc_btn"
             android:layout_width="314dp"
             android:layout_height="65dp"
             android:lineHeight="36sp"

@@ -53,7 +53,14 @@
         android:id="@+id/detailThueFragment"
         android:name="com.apolom.aodoshop.fragments.thue_detail.DetailThueFragment"
         android:label="fragment_detail_thue"
-        tools:layout="@layout/fragment_detail_thue" />
+        tools:layout="@layout/fragment_detail_thue" >
+        <action
+            android:id="@+id/action_detailThueFragment_to_thanhToanThanhCongFragment"
+            app:destination="@id/thanhToanThanhCongFragment" />
+        <action
+            android:id="@+id/action_detailThueFragment_to_fragment_home"
+            app:destination="@id/fragment_home" />
+    </fragment>
     <fragment
         android:id="@+id/thanhToanThanhCongFragment"
         android:name="com.apolom.aodoshop.fragments.thanh_toan_thanh_cong.ThanhToanThanhCongFragment"
