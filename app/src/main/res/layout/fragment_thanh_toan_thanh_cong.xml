@@ -77,12 +77,15 @@
                 <TextView
 
                     android:id="@+id/item_ticket_ma_nhan_do"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
+                    android:maxWidth="200dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|top"
                     android:height="51dp"
                     android:gravity="center_vertical"
-                    android:text="MX20240012"
+                    android:maxLines="1"
+                    android:maxLength="10"
+                    android:text="MTCe705fa9a-733d-418a-93fc-d5cf4d97448f"
                     android:textColor="#000000"
                     android:textFontWeight="300"
                     android:textSize="32sp"

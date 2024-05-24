@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.apolom.aodoshop" />
+                  <option name="mobileSdkAppId" value="1:590740917660:android:ffa9460352b3b4d1728c59" />
+                  <option name="projectId" value="chatapp-ea3bd" />
+                  <option name="projectNumber" value="590740917660" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -18,17 +18,19 @@ import java.util.List;
 
 public class SizeGridAdapter extends RecyclerView.Adapter<SizeGridAdapter.ViewHolder> {
     public int selected = 0;
-    private List<String> mData;
+    private List<Long> mData;
     private  Context ctx;
     private LayoutInflater mInflater;
+    private Call callback;
 
-    public SizeGridAdapter(Context context, List<String> data) {
+    public SizeGridAdapter(Context context, List<Long> data,Call call) {
+        this.callback = call;
         this.mInflater = LayoutInflater.from(context);
         ctx = context;
         this.mData = data;
 
     }
-    public String getSize() {return mData.get(selected);}
+    public Integer getSize() {return mData.size();}
 
     @NonNull
     @Override
@@ -40,8 +42,8 @@ public class SizeGridAdapter extends RecyclerView.Adapter<SizeGridAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String item = mData.get(position);
-        holder.myTextView.setText(item);
+        Long item = mData.get(position);
+        holder.myTextView.setText(String.format("%d", item));
         holder.setBackground(selected==position,ctx);
         holder.frame.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -49,7 +51,10 @@ public class SizeGridAdapter extends RecyclerView.Adapter<SizeGridAdapter.ViewHo
                 notifyItemChanged(selected);
                 TextView value = v.findViewById(R.id.size);
                 selected = holder.getAdapterPosition();
+                callback.onPick(mData.get(selected)+"");
                 notifyItemChanged(selected);
+
+
 
             }
         });

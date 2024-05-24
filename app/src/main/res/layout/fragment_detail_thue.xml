@@ -137,7 +137,7 @@
                 android:textFontWeight="700"
                 android:textSize="20sp" />
             <Button
-                android:id="@+id/fragment_mua_decrease"
+                android:id="@+id/fragment_thue_decrease"
                 android:layout_width="40dp"
                 android:layout_height="38dp"
                 android:textSize="24sp"
@@ -146,7 +146,7 @@
             <!-- TextView hiển thị số lượng -->
 
             <TextView
-                android:id="@+id/fragment_mua_so_luong"
+                android:id="@+id/fragment_thue_detail_so_luong"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:height="38dp"
@@ -160,7 +160,7 @@
 
             <!-- Nút tăng số lượng -->
             <Button
-                android:id="@+id/fragment_mua_increase"
+                android:id="@+id/fragment_thue_increase"
                 android:layout_width="40dp"
                 android:layout_height="38dp"
                 android:text="+"

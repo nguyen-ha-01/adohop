@@ -14,10 +14,24 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_fragment_home_to_detailThueFragment"
-            app:destination="@id/detailThueFragment" />
+            app:destination="@id/detailThueFragment" >
+            <argument
+                android:name="product"
+                app:argType="com.apolom.aodoshop.models.Product" />
+            <argument
+                android:name="money"
+                app:argType="long" />
+        </action>
         <action
             android:id="@+id/action_fragment_home_to_muaFragment"
-            app:destination="@id/muaFragment" />
+            app:destination="@id/muaFragment" >
+            <argument
+                android:name="product"
+                app:argType="com.apolom.aodoshop.models.Product" />
+            <argument
+                android:name="money"
+                app:argType="long" />
+        </action>
         <action
             android:id="@+id/action_fragment_home_to_napTienFragment"
             app:destination="@id/napTienFragment" />
@@ -42,24 +56,40 @@
         android:name="com.apolom.aodoshop.fragments.mua_detail.MuaFragment"
         android:label="fragment_mua"
         tools:layout="@layout/fragment_mua" >
+
         <action
             android:id="@+id/action_muaFragment_to_fragment_home"
             app:destination="@id/fragment_home" />
         <action
             android:id="@+id/action_muaFragment_to_thanhToanThanhCongFragment"
             app:destination="@id/thanhToanThanhCongFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.apolom.aodoshop.models.Product" />
+        <argument
+            android:name="money"
+            app:argType="long" />
+
     </fragment>
     <fragment
         android:id="@+id/detailThueFragment"
         android:name="com.apolom.aodoshop.fragments.thue_detail.DetailThueFragment"
         android:label="fragment_detail_thue"
         tools:layout="@layout/fragment_detail_thue" >
+        <argument
+            android:name="product"
+            app:argType="com.apolom.aodoshop.models.Product" />
+        <argument
+            android:name="money"
+            app:argType="long" />
         <action
             android:id="@+id/action_detailThueFragment_to_thanhToanThanhCongFragment"
             app:destination="@id/thanhToanThanhCongFragment" />
         <action
             android:id="@+id/action_detailThueFragment_to_fragment_home"
             app:destination="@id/fragment_home" />
+
+
     </fragment>
     <fragment
         android:id="@+id/thanhToanThanhCongFragment"

@@ -35,9 +35,6 @@ public class ItemHome extends FrameLayout {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         root = inflater.inflate(R.layout.item_home, this, true);
-
-
-
         // Get references to the child views
         imageView = root.findViewById(R.id.item_home_image);
         title = root.findViewById(R.id.item_home_title);

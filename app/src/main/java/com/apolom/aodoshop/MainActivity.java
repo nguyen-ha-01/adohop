@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.apolom.aodoshop.repo.DbCloud;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,13 +31,22 @@ import android.view.MenuItem;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    DbCloud i = new DbCloud("");
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -44,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
-        MainActivity c = this;
+
         BottomNavigationView navView = this.findViewById(R.id.nav_view);
-//        navView.setVisibility(View.INVISIBLE);
+
         navView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener(){
 
             @SuppressLint("NonConstantResourceId")
@@ -60,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(id==  R.id.fragment_profile)
                     navController.navigate(fragment_profile);
+                i.initProduct();
 
                 if(id== R.id.fragment_shop)
                     navController.navigate(fragment_shop);
@@ -74,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        hideSystemUI();
+
     }
 
     private void hideSystemUI() {
