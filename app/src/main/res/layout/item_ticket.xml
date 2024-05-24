@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="334dp"
-    android:layout_height="wrap_content"
+    android:layout_height="240dp"
+
 
     android:layout_gravity="center_horizontal"
     android:background="@drawable/back_ticket"
@@ -68,6 +69,7 @@
                 android:text="MX20240012"
                 android:height="22dp"
                 android:gravity="center_vertical"
+                android:maxLength="10"
                 android:textColor="#000000"
                 android:textFontWeight="300"
                 android:textSize="14sp"/>

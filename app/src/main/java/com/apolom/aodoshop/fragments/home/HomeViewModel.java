@@ -91,6 +91,7 @@ public class HomeViewModel extends ViewModel {
                 }
             });
         }catch (Exception e){
+            e.printStackTrace();
             System.out.println("can  load");
         }
 

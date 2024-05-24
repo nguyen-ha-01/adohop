@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(id==  R.id.fragment_profile)
                     navController.navigate(fragment_profile);
-                i.initProduct();
+//                i.initProduct();
 
                 if(id== R.id.fragment_shop)
                     navController.navigate(fragment_shop);

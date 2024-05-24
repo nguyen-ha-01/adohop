@@ -32,6 +32,7 @@ public class DbCloud {
         db = FirebaseFirestore.getInstance();
     }
     public static  String _product = "PRODUCT";
+    public static String user = "users";
     public static  String _quoc_phong = "quoc_phong";
     public static String _the_chat = "the_chat";
     public  static String _order = "order";

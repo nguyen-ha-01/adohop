@@ -8,7 +8,10 @@ import com.apolom.aodoshop.models.Order;
 import com.apolom.aodoshop.models.Product;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class MuaViewModel extends ViewModel {
@@ -52,7 +55,16 @@ public class MuaViewModel extends ViewModel {
             String id = DbCloud._mua_first_tail+generateRandomId();
             Order order = new Order(product.getValue().name,total_pay.getValue(),total_count.getValue().longValue(),uid,id, size.getValue(),"","","mua");
             FirebaseFirestore f= FirebaseFirestore.getInstance();
-            f.collection(DbCloud._order).add(order);
+            //check money
+            f.collection(DbCloud.user).document(uid).get().addOnCompleteListener(d->{
+                long money = (long) d.getResult().get("money");
+                if(money>= total_pay.getValue()){
+                    f.collection(DbCloud._order).add(order);
+                    Map<String,Object> data = new HashMap<>();
+                    data.put("money",money- total_pay.getValue());
+                    f.collection(DbCloud.user).document(uid).set(data, SetOptions.mergeFields("money"));
+                }
+            });
         }catch (Exception e){
             e.printStackTrace();
         }

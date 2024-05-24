@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import com.apolom.aodoshop.R;
 
-/**
- * TODO: document your custom view class.
- */
+
 public class ChuaNhanTicket extends FrameLayout  {
     View root;
     private ImageView _barcode;
