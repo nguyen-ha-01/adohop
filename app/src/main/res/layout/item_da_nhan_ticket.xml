@@ -171,7 +171,7 @@
                 android:id="@+id/item_da_nhan_ticket_tra_btn"
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:text="@string/doi"
+                android:text="@string/tra"
                 app:cornerRadius="10dp"
                 app:strokeColor="@color/primary"
                 app:strokeWidth="1dp"

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.apolom.aodoshop.R;
 import com.apolom.aodoshop.models.Order;
+import com.apolom.aodoshop.service.QrService;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class HoaDonChuaNhanAdapter extends RecyclerView.Adapter<HoaDonChuaNhanAd
     private Context ctx;
     private LayoutInflater mInflater;
     private Call callback;
+    QrService service = new QrService();
 
     public HoaDonChuaNhanAdapter(Context context, List<Order> data,Call call) {
         this.callback = call;
@@ -49,6 +51,11 @@ public class HoaDonChuaNhanAdapter extends RecyclerView.Adapter<HoaDonChuaNhanAd
         //todo:bind data and callback for item view
         holder.setText("havent no yet", item.id, item.productName, String.format("%d",item.quantity), item.size, String.format("%d",item.price));
         holder.addCallback(callback,item);
+
+        try {
+            Bitmap b = service.generateBarcode(item.id);
+            holder.setImage(b);
+        }catch (Exception e){e.printStackTrace();}
 
     }
 

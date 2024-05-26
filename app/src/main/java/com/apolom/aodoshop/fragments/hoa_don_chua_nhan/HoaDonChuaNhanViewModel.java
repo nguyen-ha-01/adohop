@@ -1,16 +1,22 @@
 package com.apolom.aodoshop.fragments.hoa_don_chua_nhan;
 
-import static java.lang.System.in;
-
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.apolom.aodoshop.R;
 import com.apolom.aodoshop.models.Order;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
+import com.apolom.aodoshop.service.QrService;
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -20,10 +26,11 @@ import java.util.List;
 public class HoaDonChuaNhanViewModel extends ViewModel {
     // TODO: Implement the ViewModel
     HoaDonChuaNhanViewModel(Context ctx) {
-        spm = new SharedPreferencesManager(ctx);
+        spm = new SharedPreferencesManager(ctx);this.ctx=  ctx ;
     }
 
     private MutableLiveData<List<Order>> data = new MutableLiveData<>();
+    private Context ctx ;
 
     public MutableLiveData<List<Order>> getData() {
         return data;
@@ -59,4 +66,19 @@ public class HoaDonChuaNhanViewModel extends ViewModel {
         }
     }
 
+    public void scanToNhanDo(Order data) {
+        LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View root = inflater.inflate(R.layout.item_barcode, null,false);
+        ImageView imageView = root.findViewById(R.id.imageView);
+        QrService service = new QrService();
+        try {
+            Bitmap b = service.generateBarcode(data.id);
+            imageView.setImageBitmap(b);
+        }catch (Exception e){e.printStackTrace();}
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setView(root);
+        builder.setTitle("Scan");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
