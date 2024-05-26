@@ -38,7 +38,7 @@ public class HoaDonChuaNhanViewModel extends ViewModel {
             //getdata
             cl.collection(DbCloud._order)
             .whereEqualTo("uid", uid)
-//            .whereEqualTo("type", "mua")
+            .whereEqualTo("orderType", "mua")
             .get().addOnCompleteListener(d -> {
                     if(d.getResult().size()>0){
                         List<Order> _data = new ArrayList<>();

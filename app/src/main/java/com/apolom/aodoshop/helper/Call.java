@@ -1,5 +1,5 @@
 package com.apolom.aodoshop.helper;
 
-public interface Call {
-    void onPick(String e);
+public interface Call<T> {
+    void onPick(T e);
 }

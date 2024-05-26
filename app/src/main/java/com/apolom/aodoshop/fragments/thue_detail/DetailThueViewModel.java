@@ -97,7 +97,7 @@ public class DetailThueViewModel extends ViewModel {
     public static String generateRandomId() {
         return UUID.randomUUID().toString();
     }
-    void addOrder(String uid){
+    String addOrder(String uid){
         try{
             String id = DbCloud._thue_first_tail+generateRandomId();
             Order order = new Order(product.getValue().name,total_pay.getValue(),total_count.getValue().longValue(),uid,id, size.getValue(), date_start.getValue(),date_end.getValue(),"thue");
@@ -111,9 +111,11 @@ public class DetailThueViewModel extends ViewModel {
                     f.collection(DbCloud.user).document(uid).set(data, SetOptions.mergeFields("money"));
                 }
             });
+            return id;
         }catch (Exception e){
             e.printStackTrace();
         }
+        return "";
     }
 
 }

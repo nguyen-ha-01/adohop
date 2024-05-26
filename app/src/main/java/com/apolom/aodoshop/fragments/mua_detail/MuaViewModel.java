@@ -13,6 +13,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MuaViewModel extends ViewModel {
 
@@ -50,8 +51,10 @@ public class MuaViewModel extends ViewModel {
     public static String generateRandomId() {
         return UUID.randomUUID().toString();
     }
-    void addOrder(String uid){
+    String addOrder(String uid){
+        AtomicReference<String> idOrder = new AtomicReference<>("");
         try{
+
             String id = DbCloud._mua_first_tail+generateRandomId();
             Order order = new Order(product.getValue().name,total_pay.getValue(),total_count.getValue().longValue(),uid,id, size.getValue(),"","","mua");
             FirebaseFirestore f= FirebaseFirestore.getInstance();
@@ -63,11 +66,14 @@ public class MuaViewModel extends ViewModel {
                     Map<String,Object> data = new HashMap<>();
                     data.put("money",money- total_pay.getValue());
                     f.collection(DbCloud.user).document(uid).set(data, SetOptions.mergeFields("money"));
+                    idOrder.set(id);
                 }
             });
+
         }catch (Exception e){
             e.printStackTrace();
         }
+        return idOrder.get();
     }
 
     public void setSize(String e) {

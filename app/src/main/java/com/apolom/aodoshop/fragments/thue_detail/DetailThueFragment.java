@@ -95,7 +95,7 @@ public class DetailThueFragment extends Fragment {
                     price.setText(format("%d%s", p.price,p.type));
                     int numberOfColumns = 7; // Number of columns in the grid
                     sizes.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
-                    SizeGridAdapter adapter = new SizeGridAdapter(this.getContext(), p.size, new Call() {
+                    SizeGridAdapter adapter = new SizeGridAdapter(this.getContext(), p.size, new Call<String>() {
                         @Override
                         public void onPick(String e) {
                             mViewModel.setSize(e);
@@ -236,8 +236,12 @@ public class DetailThueFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     SharedPreferencesManager   share = new SharedPreferencesManager(requireContext()) ;
-                    mViewModel.addOrder(share.getUID());
-                    navController.navigate(R.id.action_detailThueFragment_to_thanhToanThanhCongFragment);
+                    String _id = mViewModel.addOrder(share.getUID());
+
+                    Bundle b = new Bundle();
+                    b.putString("id", _id);
+
+                    navController.navigate(R.id.action_detailThueFragment_to_thanhToanThanhCongFragment,b);
                 }catch (Exception e){
                     Toast.makeText(requireContext(),"something work on order",Toast.LENGTH_SHORT);
                 }

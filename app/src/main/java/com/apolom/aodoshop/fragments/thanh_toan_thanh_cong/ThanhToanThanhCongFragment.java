@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.apolom.aodoshop.MainActivity;
 import com.apolom.aodoshop.R;
@@ -28,11 +29,22 @@ public class ThanhToanThanhCongFragment extends Fragment {
         return new ThanhToanThanhCongFragment();
     }
     private MaterialButton _next;
+    private TextView id;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_thanh_toan_thanh_cong, container, false);
+        View view =  inflater.inflate(R.layout.fragment_thanh_toan_thanh_cong, container, false);
+        id = view.findViewById(R.id.item_ticket_ma_nhan_do);
+        try {
+            if(getArguments().isEmpty()){}
+            else {
+                String _id = getArguments().getString("id","");
+                if(_id!= ""){id.setText(_id);}
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return view;
     }
 
     @Override

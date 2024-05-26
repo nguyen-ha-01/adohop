@@ -90,7 +90,7 @@ public class MuaFragment extends Fragment {
                 Log.e("list", p.size.size() + " size");
                 int numberOfColumns = 7; // Number of columns in the grid
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
-                SizeGridAdapter adapter = new SizeGridAdapter(this.getContext(), p.size, new Call() {
+                SizeGridAdapter adapter = new SizeGridAdapter(this.getContext(), p.size, new Call<String>() {
                     @Override
                     public void onPick(String e) {
                         //todo:set size here
@@ -166,8 +166,10 @@ public class MuaFragment extends Fragment {
             @Override
             public void onClick(View v) {try {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(requireContext());
-                mViewModel.addOrder(sharedPreferencesManager.getUID());
-                controller.navigate(R.id.action_muaFragment_to_thanhToanThanhCongFragment);
+                String idOrder= mViewModel.addOrder(sharedPreferencesManager.getUID());
+                Bundle b = new Bundle();
+                b.putString("id", idOrder);
+                controller.navigate(R.id.action_muaFragment_to_thanhToanThanhCongFragment, b);
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -6,16 +6,13 @@
     android:orientation="vertical"
     android:layout_gravity="center_horizontal"
     tools:context=".fragments.thue.ThueFragment">
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_height="match_parent"
+        android:id="@+id/frag_thue_recycle"
+        android:paddingHorizontal="10dp"
+        />
 
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
-        <com.apolom.aodoshop.fragments.commons.ThueTicket
-            android:layout_width="340dp"
-            android:layout_height="228dp"/>
-
-    </LinearLayout>
 
 </LinearLayout>

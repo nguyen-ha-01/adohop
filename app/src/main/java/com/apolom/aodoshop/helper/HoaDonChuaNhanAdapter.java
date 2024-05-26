@@ -48,6 +48,7 @@ public class HoaDonChuaNhanAdapter extends RecyclerView.Adapter<HoaDonChuaNhanAd
         Order item = mData.get(position);
         //todo:bind data and callback for item view
         holder.setText("havent no yet", item.id, item.productName, String.format("%d",item.quantity), item.size, String.format("%d",item.price));
+        holder.addCallback(callback,item);
 
     }
 
@@ -81,8 +82,14 @@ public class HoaDonChuaNhanAdapter extends RecyclerView.Adapter<HoaDonChuaNhanAd
             _daThanhToan = _root.findViewById(R.id.item_ticket_da_thanh_toan);
 
         }
-        public void addCallback(View.OnClickListener call){
-            root.setOnClickListener(call);
+        public void addCallback(Call call,Order e){
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    call.onPick(e);
+                }
+            });
+
         }
         public void setText(String __date,String __maNhanDo,String __nameProduct,String __count,String __size, String __daThanhToan){
             _date.setText(__date);_maNhanDo.setText(__maNhanDo);_nameProduct.setText(__nameProduct);_count.setText("x"+__count);_size.setText("size"+__size); _daThanhToan.setText(__daThanhToan+" vnd");
