@@ -78,6 +78,7 @@ public class DptcTraHangViewModel extends ViewModel {
             }
         });
         AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.back_corner);
         dialog.show();
     }
     void loadTicket(Call<Order> call) {

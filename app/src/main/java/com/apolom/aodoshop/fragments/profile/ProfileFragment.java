@@ -3,6 +3,8 @@ package com.apolom.aodoshop.fragments.profile;
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,12 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apolom.aodoshop.R;
+import com.apolom.aodoshop.fragments.login_signup.ui.login.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 
 public class ProfileFragment extends Fragment {
 
     private ProfileViewModel mViewModel;
-    private TextView _changePassword;
+    private TextView _changePassword, _logout, username;
+
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -32,6 +36,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mViewModel= new ProfileViewModel(getContext());
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -39,6 +44,18 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         _changePassword = view.findViewById(R.id.fragment_profile_change_password);
+        _logout = view.findViewById(R.id.fragment_profile_logout);
+        username = view.findViewById(R.id.fragment_profile_username);
+
+        Context ctx = requireContext();
+        _logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.logout();
+                Intent i = new Intent(ctx, LoginActivity.class);
+                ctx.startActivity(i);
+            }
+        });
         _changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,6 +73,7 @@ public class ProfileFragment extends Fragment {
         final EditText editTextNewPassword = dialogView.findViewById(R.id.profile__new_password);
         final EditText editTextConfirmNewPassword = dialogView.findViewById(R.id.profile__new_password_confirm);
         final MaterialButton _submit =  dialogView.findViewById(R.id.profile__submit_btn);
+
 
         // Build the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -107,11 +125,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 
 }

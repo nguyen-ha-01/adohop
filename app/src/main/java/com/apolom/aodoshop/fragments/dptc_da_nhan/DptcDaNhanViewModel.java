@@ -167,6 +167,7 @@ public class DptcDaNhanViewModel extends ViewModel {
 
             }
         });
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.back_corner);
         dialog.show();
     }
     MutableLiveData<Integer> newSize = new MutableLiveData<>(0);
@@ -174,8 +175,8 @@ public class DptcDaNhanViewModel extends ViewModel {
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View root = inflater.inflate(R.layout.dialog_doi_size, null,false);
         TextView _new_size = root.findViewById(R.id.dialog_size);
-        Button add = root.findViewById(R.id.dialog_size_decrease);
-        Button minus = root.findViewById(R.id.dialog_size_increase);
+        Button minus= root.findViewById(R.id.dialog_size_decrease);
+        Button  add = root.findViewById(R.id.dialog_size_increase);
         MaterialButton huy = root.findViewById(R.id.dialog_size_huy_btn);
         MaterialButton doi = root.findViewById(R.id.dialog_size_btn_doi);
         newSize.setValue(Integer.valueOf(e.size));
@@ -223,6 +224,7 @@ public class DptcDaNhanViewModel extends ViewModel {
 
             }
         });
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.back_corner);
         dialog.show();
     }
 }

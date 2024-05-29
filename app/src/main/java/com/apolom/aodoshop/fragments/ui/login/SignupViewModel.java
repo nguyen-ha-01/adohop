@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 
 import com.apolom.aodoshop.MainActivity;
+import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -25,21 +27,24 @@ public class SignupViewModel extends ViewModel {
 
 
     private FirebaseAuth mAuth;
-    private SharedPreferencesManager _share ;
-    private MutableLiveData<Boolean> dataSavedLiveData=  new MutableLiveData<>(false);
+    private FirebaseFirestore cl;
+    private SharedPreferencesManager _share;
+    private MutableLiveData<Boolean> dataSavedLiveData = new MutableLiveData<>(false);
 
     private MutableLiveData<String> userLiveData;
     private MutableLiveData<String> errorLiveData;
-private Context ctx;
+    private Context ctx;
+
     public SignupViewModel(Context ctx) {
+        cl = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userLiveData = new MutableLiveData<>();
-        _share= new SharedPreferencesManager(ctx);
+        _share = new SharedPreferencesManager(ctx);
         this.ctx = ctx;
-        try{
+        try {
             _share.clearUID();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         errorLiveData = new MutableLiveData<>();
@@ -48,6 +53,7 @@ private Context ctx;
     LiveData<String> getUserState() {
         return userLiveData;
     }
+
     private void checkIfEmailExists(final String email, final String password) {
         mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
@@ -75,20 +81,22 @@ private Context ctx;
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
+                        String uid = task.getResult().getUser().getUid();
+                        _share.saveUID(uid);
+                        DbCloud cloud = new DbCloud("");
+                        cloud.createUserOnDB(uid,password,email,email);
                     }
                 });
     }
 
 
-
     public void signup(String username, String password) {
-       try {
-           checkIfEmailExists(username,password);
+        try {
+            checkIfEmailExists(username, password);
 
-       }catch (Exception e){
-           e.printStackTrace();
-       }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void loginDataChanged(String username, String password) {

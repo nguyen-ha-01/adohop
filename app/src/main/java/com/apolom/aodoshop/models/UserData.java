@@ -15,7 +15,7 @@ public class UserData {
         this.displayName = displayName;
         this.money = money;
     }
-    Map<String, Object> toMap() {
+    public Map<String, Object> toMap() {
        Map<String, Object> user = new HashMap<>();
         user.put("password", password);
         user.put("email", email);
@@ -24,7 +24,11 @@ public class UserData {
         return user;
     }
     static  public UserData fromMap(String uid, Map<String, Object> user) {
-        UserData u = new UserData(uid, (String) user.get("email"), (String) user.get("display_name"), (String) user.get("password"), (long) user.get("money"));
-        return u;
+        try{UserData u = new UserData(uid, (String) user.get("email"), (String) user.get("display_name"), (String) user.get("password"), (long) user.get("money"));
+            return u;}catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }

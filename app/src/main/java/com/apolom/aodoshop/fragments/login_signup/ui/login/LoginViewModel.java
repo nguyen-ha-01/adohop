@@ -36,7 +36,11 @@ public class LoginViewModel extends ViewModel {
         _share= new SharedPreferencesManager(ctx);
         try{
             String uid = _share.getUID();
+            if (uid!= null)
             userLiveData.setValue(uid);
+            else{
+                userLiveData.setValue(mAuth.getCurrentUser().getUid());
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -50,14 +54,12 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String email, String password) {
         try{
-            DbCloud cloud = new DbCloud("");
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             FirebaseUser u = mAuth.getCurrentUser();
                             userLiveData.setValue(u.getUid());
                             _share.saveUID(u.getUid());
-                            cloud.createUserOnDB(u.getUid(),password,email,email);
                             Log.d("LOGIN","LOGINED WITH"+mAuth.getCurrentUser().getUid());
                         } else {
                             errorLiveData.setValue(task.getException().getMessage());

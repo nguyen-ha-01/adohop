@@ -14,6 +14,7 @@ import com.apolom.aodoshop.models.UserData;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeViewModel extends ViewModel {
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     private final MutableLiveData<Product> quocPhongLiveData = new MutableLiveData<>();
     private final MutableLiveData<Product> theChatLiveData = new MutableLiveData<>();
     private final MutableLiveData<UserData> user = new MutableLiveData<>();
@@ -30,12 +32,34 @@ public class HomeViewModel extends ViewModel {
     void initUser(Context ctx){
         try{
             SharedPreferencesManager share  = new SharedPreferencesManager(ctx);
-            String uid = share.getUID();
-            FirebaseFirestore.getInstance().collection("users").document(uid)
-                    .get()
-                    .addOnCompleteListener(e->{
-                        user.setValue(UserData.fromMap(uid,e.getResult().getData()));
-                    });
+
+            String finalUid = auth.getCurrentUser().getUid();
+            if(finalUid!= null) {
+                FirebaseFirestore.getInstance().collection("users").document(finalUid)
+                        .get()
+                        .addOnCompleteListener(e -> {
+                            try {
+                                UserData d = UserData.fromMap(finalUid, e.getResult().getData());
+                                user.setValue(d);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+
+                        });
+            }else {
+                String uid = share.getUID();
+                FirebaseFirestore.getInstance().collection("users").document(uid)
+                        .get()
+                        .addOnCompleteListener(e -> {
+                            try {
+                                UserData d = UserData.fromMap(finalUid, e.getResult().getData());
+                                user.setValue(d);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+
+                        });
+            }
 
 
         }catch (Exception e){

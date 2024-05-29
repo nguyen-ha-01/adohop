@@ -51,4 +51,19 @@
         android:textFontWeight="700"
         android:gravity="center_vertical"
         />
+    <TextView
+        android:id="@+id/fragment_profile_logout"
+        android:layout_width="310dp"
+        android:layout_height="53dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="230dp"
+        android:text="Đăng xuất"
+        android:textSize="24sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:textFontWeight="700"
+        android:gravity="center_vertical"
+        />
     </RelativeLayout>

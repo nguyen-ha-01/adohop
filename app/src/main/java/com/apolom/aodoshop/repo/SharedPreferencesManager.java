@@ -16,11 +16,15 @@ public class SharedPreferencesManager {
     public void saveUID(String uid) {
         editor.putString(KEY_UID, uid);
         editor.apply();
+        editor.commit();
+        sharedPreferences.notify();
 
     }
 
     public String getUID() {
-        return sharedPreferences.getString(KEY_UID, "TgKvV9StXvXLYawM4RChCyDlXdU2");
+        // TODO: 5/30/2024 check login
+        // "TgKvV9StXvXLYawM4RChCyDlXdU2"
+        return sharedPreferences.getString(KEY_UID,null);
     }
 
     public void clearUID() {

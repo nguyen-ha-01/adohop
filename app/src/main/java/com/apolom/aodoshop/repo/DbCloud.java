@@ -48,7 +48,7 @@ public class DbCloud {
         UserData userData = new UserData(userId,email,name,pass,0L);
         try {
             db.collection("users").document(userId)
-                    .set(userData, SetOptions.merge());
+                    .set(userData.toMap(), SetOptions.merge());
             return true;
         }catch (Exception e){return false;}
     }
@@ -72,10 +72,14 @@ public class DbCloud {
         );
 
     }
-//    public UserData getUserInfo(String uid){
-//        db.collection("users").document(uid)
-//                .get()
-//                .addOnCompleteListener(e->{}).getResult().getData();
-//        return UserData.fromMap(uid,map);
-//    }
+    public UserData getUserInfo(String uid){
+        try {
+            Map<String ,Object> map = db.collection(user).document(uid)
+                    .get()
+                    .addOnCompleteListener(e->{}).getResult().getData();
+            return UserData.fromMap(uid,map);
+        }catch (Exception e){
+            return null;
+        }
+    }
 }

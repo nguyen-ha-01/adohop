@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.apolom.aodoshop.MainActivity;
 import com.apolom.aodoshop.R;
 import com.apolom.aodoshop.databinding.ActivityLoginBinding;
+import com.apolom.aodoshop.fragments.ui.login.SignupActivity;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
+        final Button signup = binding.signup;
 
         loginViewModel.getUserState().observe(this, new Observer<String>() {
             @Override
@@ -50,11 +53,20 @@ public class LoginActivity extends AppCompatActivity {
                 if(uid != null){
                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
                     i.putExtra("uid",uid);
+
                     startActivity(i);
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"user is null",Toast.LENGTH_SHORT);
                 }
+            }
+        });
+        Context c = this;
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(c, SignupActivity.class);
+                c.startActivity(intent);
             }
         });
 
