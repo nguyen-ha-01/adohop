@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="334dp"
+    android:layout_height="262dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
+    <TextView
+        android:id="@+id/x_c_nh_n_tr"
+        android:layout_width="300dp"
+        android:layout_height="61dp"
+        android:textStyle="bold"
+        android:text="@string/dialog_doi_size"
+        android:lineHeight="34sp"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="9dp"
+        android:textSize="28sp"
+        android:textColor="#28386D"
+        android:gravity="center_horizontal"
+        />
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <!-- Nút giảm số lượng -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#28386D"
+            android:height="38dp"
+            android:gravity="center_vertical"
+            android:text="Chọn kích thước: "
+            android:textFontWeight="700"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/dialog_size_decrease"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:text="-"
+            android:textSize="24sp"
+            android:background="@drawable/icon_minus" />
+
+        <!-- TextView hiển thị số lượng -->
+
+        <TextView
+            android:id="@+id/dialog_size"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:height="38dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="26dp"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/count"
+            android:textColor="#040404"
+            android:textFontWeight="700"
+            android:textSize="20sp" />
+
+        <!-- Nút tăng số lượng -->
+        <Button
+            android:id="@+id/dialog_size_increase"
+            android:layout_width="40dp"
+            android:layout_height="38dp"
+            android:text="+"
+            android:textSize="24sp"
+            android:background="@drawable/icon_plus"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/n_u_s_n_ph_"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/luu_y_doi_size"
+        android:textAppearance="@style/n_u_s_n_ph_"
+        android:gravity="center_vertical|top"
+        />
+    <FrameLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_size_huy_btn"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="@string/h_y"
+            app:cornerRadius="10dp"
+            app:strokeColor="@color/primary"
+            android:layout_gravity="start"
+            app:strokeWidth="1dp"
+            android:textColor="@color/primary"
+            app:rippleColor="@color/primary_indicator"
+            android:textSize="18sp"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_size_btn_doi"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:text="@string/doi"
+            app:cornerRadius="10dp"
+            android:layout_gravity="end"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="1dp"
+            android:textColor="@color/on_primary"
+            app:rippleColor="@color/primary_indicator"
+            android:textSize="18sp"
+            android:backgroundTint="@color/secondary"/>
+    </FrameLayout>
+
+</LinearLayout>

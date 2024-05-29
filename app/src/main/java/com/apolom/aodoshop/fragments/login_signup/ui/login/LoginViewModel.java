@@ -25,33 +25,28 @@ public class LoginViewModel extends ViewModel {
     private FirebaseAuth mAuth;
     private SharedPreferencesManager _share ;
     private MutableLiveData<Boolean> dataSavedLiveData=  new MutableLiveData<>(false);
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+
 
     private MutableLiveData<String> userLiveData;
     private MutableLiveData<String> errorLiveData;
 
     LoginViewModel(Context ctx) {
         mAuth = FirebaseAuth.getInstance();
-
-        String uid = _share.getUID();
-//        if(uid!=null){
-//            userLiveData = new MutableLiveData<>(uid);
-//        }else {
-            userLiveData = new MutableLiveData<>();
-//        }
-
-        errorLiveData = new MutableLiveData<>();
+        userLiveData = new MutableLiveData<>();
         _share= new SharedPreferencesManager(ctx);
-
+        try{
+            String uid = _share.getUID();
+            userLiveData.setValue(uid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        errorLiveData = new MutableLiveData<>();
     }
 
     LiveData<String> getUserState() {
         return userLiveData;
     }
 
-    LiveData<LoginResult> getLoginResult() {
-        return loginResult;
-    }
 
     public void login(String email, String password) {
         try{
@@ -62,7 +57,6 @@ public class LoginViewModel extends ViewModel {
                             FirebaseUser u = mAuth.getCurrentUser();
                             userLiveData.setValue(u.getUid());
                             _share.saveUID(u.getUid());
-
                             cloud.createUserOnDB(u.getUid(),password,email,email);
                             Log.d("LOGIN","LOGINED WITH"+mAuth.getCurrentUser().getUid());
                         } else {
@@ -70,13 +64,10 @@ public class LoginViewModel extends ViewModel {
                         }
                     });
         }catch (Exception e){
-            loginResult.setValue(new LoginResult(R.string.login_failed));
             throw e;
         }
     }
-    public void loginDataChanged(String username, String password) {
 
-    }
 
     // A placeholder username validation check
     private boolean isUserNameValid(String username) {
@@ -90,7 +81,6 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
     }

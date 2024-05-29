@@ -42,8 +42,8 @@
             android:gravity="center_vertical"
             />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
@@ -51,28 +51,28 @@
             android:id="@+id/dialog_xac_nhan_tra_hang_huy_btn"
             android:layout_width="120dp"
             android:layout_height="50dp"
-            android:text="@string/doi"
+            android:text="Hủy"
             app:cornerRadius="10dp"
             app:strokeColor="@color/primary"
+            android:layout_gravity="start"
             app:strokeWidth="1dp"
             android:textColor="@color/primary"
             app:rippleColor="@color/primary_indicator"
             android:textSize="18sp"
             android:backgroundTint="@android:color/transparent"/>
-        <Space
-            android:layout_width="8dp"
-            android:layout_height="1dp"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/dialog_xac_nhan_tra_hang_tra_btn"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:text="@string/tra"
             app:cornerRadius="10dp"
+            android:layout_gravity="end"
             app:strokeColor="@color/secondary"
             app:strokeWidth="1dp"
             android:textColor="@color/on_primary"
             app:rippleColor="@color/primary_indicator"
             android:textSize="18sp"
             android:backgroundTint="@color/secondary"/>
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

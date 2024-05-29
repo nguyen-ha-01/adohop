@@ -9,11 +9,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.apolom.aodoshop.R;
+import com.apolom.aodoshop.fragments.hoa_don_chua_nhan.HoaDonChuaNhanFragment;
 import com.apolom.aodoshop.helper.ShopFragmentPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -21,6 +23,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 public class ShopFragment extends Fragment {
 
     private ShopViewModel mViewModel;
+    ViewPager2 viewPager;
+    ShopFragmentPagerAdapter adapter;
+    TabLayout tabLayout;
 
     public static ShopFragment newInstance() {
         return new ShopFragment();
@@ -29,19 +34,29 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_shop, container, false);
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
-        ViewPager2 viewPager = view.findViewById(R.id.view_pager);
-
-        ShopFragmentPagerAdapter adapter= new ShopFragmentPagerAdapter(this.getActivity());
+        View view = inflater.inflate(R.layout.fragment_shop, container, false);
+         tabLayout = view.findViewById(R.id.tab_layout);
+        viewPager = view.findViewById(R.id.view_pager);
+        adapter= new ShopFragmentPagerAdapter(this.getActivity());
         viewPager.setAdapter(adapter);
         viewPager.canScrollHorizontally(2);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {
                     switch (position) {
@@ -62,6 +77,21 @@ public class ShopFragment extends Fragment {
                             break;
                     }
                 }).attach();
+        return view;
+    }
+     public void reloadCurrentTab(int pos) {
+//        int currentItem = viewPager.getCurrentItem();
+//       adapter.notifyItemChanged(currentItem);
+         Log.e("reloadddd","calll");
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
     }
 
     @Override

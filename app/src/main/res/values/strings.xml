@@ -66,6 +66,11 @@
     <string name="thanh_to_n_">Thanh toán thành công</string>
     <string name="nguy_n_h_i_">Nguyễn Xuân Yên</string>
     <string name="thaydoi">Thay đổi</string>
+    <string name="huy">Hủy</string>
+    <string name="dialog_doi_size">Chọn kích thước mới</string>
+    <string name="luu_y_doi_size">Bạn chỉ có thể đổi lại sản phẩm một lẩn duy nhất.</string>
+    <string name="h_y">Hủy</string>
+    <string name="title_activity_signup">SignupActivity</string>
 
 
 </resources>

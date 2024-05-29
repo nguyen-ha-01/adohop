@@ -39,8 +39,8 @@ public class Order implements Serializable {
                 ", price=" + price +
                 ", quantity=" + quantity +
                 ", uid='" + uid + '\'' +
-                ", startDate=" + dateFormat.format(startDate) +
-                ", endDate=" + dateFormat.format(endDate) +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", orderType='" + orderType + '\'' +
                 '}';
     }

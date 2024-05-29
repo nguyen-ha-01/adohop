@@ -78,14 +78,12 @@ public class MuaFragment extends Fragment {
         _add =view.findViewById(R.id.fragment_mua_increase);
         count = view.findViewById(R.id.fragment_mua_so_luong);
         appBar = view.findViewById(R.id.fragment_mua_app_bar);
-
         try {
             assert getArguments() != null;
             if (!getArguments().isEmpty()) {
-
                 Product p = (Product) getArguments().getSerializable("product");
                 mViewModel.setProduct(p);
-                name.setText(p.name );
+                name.setText(p.name);
                 price.setText(String.format("%d%s", p.price,p.type));
                 Log.e("list", p.size.size() + " size");
                 int numberOfColumns = 7; // Number of columns in the grid
@@ -97,7 +95,6 @@ public class MuaFragment extends Fragment {
                         mViewModel.setSize(e);
                     }
                 });
-
                 recyclerView.setAdapter(adapter);
                 long _m = getArguments().getLong("money");
 

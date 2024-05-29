@@ -25,10 +25,10 @@ public class HoaDonChuaNhanAdapter extends RecyclerView.Adapter<HoaDonChuaNhanAd
     private List<Order> mData;
     private Context ctx;
     private LayoutInflater mInflater;
-    private Call callback;
+    private Call<Order> callback;
     QrService service = new QrService();
 
-    public HoaDonChuaNhanAdapter(Context context, List<Order> data,Call call) {
+    public HoaDonChuaNhanAdapter(Context context, List<Order> data,Call<Order> call) {
         this.callback = call;
         this.mInflater = LayoutInflater.from(context);
         ctx = context;
@@ -89,7 +89,7 @@ public class HoaDonChuaNhanAdapter extends RecyclerView.Adapter<HoaDonChuaNhanAd
             _daThanhToan = _root.findViewById(R.id.item_ticket_da_thanh_toan);
 
         }
-        public void addCallback(Call call,Order e){
+        public void addCallback(Call<Order> call,Order e){
             root.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

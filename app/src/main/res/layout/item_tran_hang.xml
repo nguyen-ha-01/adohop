@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="360dp"
+    android:layout_height="280dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/x_c_nh_n_tr"
+        android:layout_width="235dp"
+        android:layout_height="61dp"
+        
+        android:layout_gravity="center_horizontal"
+        android:text="@string/x_c_nh_n_tr"
+        android:textSize="28sp"
+        android:textColor="#28386D"
+        android:gravity="center_horizontal|center_vertical"
+        />
+    <TextView
+        android:id="@+id/n_u_s_n_ph_"
+        android:layout_width="307dp"
+        android:layout_height="71dp"
+            android:textSize="18sp"
+        android:textColor="#28386D"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/n_u_s_n_ph_"
+        android:textAppearance="@style/n_u_s_n_ph_"
+        android:gravity="center_vertical"
+        />
+    <TextView
+
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#28386D"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/b_n_h_y_c_n"
+        android:textAppearance="@style/n_u_s_n_ph_"
+        android:gravity="center_vertical|top"
+
+        />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="true"
+        android:paddingHorizontal="26dp"
+        android:paddingVertical="20dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/item_tra_hang_huy"
+            android:layout_width="120dp"
+            android:layout_height="66dp"
+            android:text="@string/huy"
+            app:cornerRadius="10dp"
+
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            app:rippleColor="@color/primary_indicator"
+            android:backgroundTint="@android:color/transparent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/item_tra_hang"
+            android:layout_width="120dp"
+            android:layout_height="66dp"
+            android:layout_gravity="right"
+
+            android:layout_marginEnd="1dp"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@android:color/transparent"
+            android:text="@string/tra"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="1dp"
+
+            />
+    </FrameLayout>
+</LinearLayout>

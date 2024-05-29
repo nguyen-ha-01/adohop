@@ -66,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|top"
                 android:text="MX20240012"
+                android:maxLength="10"
                 android:height="22dp"
                 android:gravity="center_vertical"
                 android:textColor="#000000"

@@ -38,6 +38,10 @@ public class DbCloud {
     public  static String _order = "order";
     public static String _thue_first_tail = "TQS";
     public static String _mua_first_tail = "MTC";
+    public static String _da_nhan = "da_nhan";
+    public static String _doi = "doi";
+    public static String _tra = "tra";
+
 
 
     public Boolean createUserOnDB(String userId, String pass, String name, String email) {

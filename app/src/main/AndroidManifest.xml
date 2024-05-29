@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:allowBackup="true"
         android:name=".MainApplication"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,12 +14,14 @@
         android:theme="@style/Theme.AodoShop"
         tools:targetApi="31">
         <activity
+            android:name=".fragments.ui.login.SignupActivity"
+            android:exported="true"
+            android:label="@string/title_activity_signup" />
+        <activity
             android:name=".fragments.login_signup.ui.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.AodoShop"
-            android:label="@string/title_activity_login" >
-
-        </activity>
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.AodoShop"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -29,7 +31,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

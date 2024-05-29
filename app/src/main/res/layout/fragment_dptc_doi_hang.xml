@@ -5,16 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".fragments.dptc_doi_hang.DptcDoiHangFragment">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frag_doi_recycle"
         android:layout_gravity="center_horizontal"
-        >
-        <com.apolom.aodoshop.fragments.commons.DoiTraTicket
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"/>
-    </LinearLayout>
-
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+/>
 </FrameLayout>

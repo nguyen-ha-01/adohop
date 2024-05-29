@@ -76,21 +76,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="start">
+            <!-- Nút giảm số lượng -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="38dp"
-                android:height="38dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginStart="26dp"
 
+                android:height="38dp"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_horizontal"
                 android:text="@string/slc"
                 android:textColor="#040404"
                 android:textFontWeight="700"
                 android:textSize="20sp" />
 
-
-            <!-- Nút giảm số lượng -->
             <Button
                 android:id="@+id/fragment_mua_decrease"
                 android:layout_width="40dp"

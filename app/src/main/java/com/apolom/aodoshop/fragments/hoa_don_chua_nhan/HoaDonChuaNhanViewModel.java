@@ -1,6 +1,7 @@
 package com.apolom.aodoshop.fragments.hoa_don_chua_nhan;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,15 +9,16 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.apolom.aodoshop.R;
+import com.apolom.aodoshop.helper.Call;
 import com.apolom.aodoshop.models.Order;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
 import com.apolom.aodoshop.service.QrService;
-import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,14 +34,14 @@ public class HoaDonChuaNhanViewModel extends ViewModel {
     private MutableLiveData<List<Order>> data = new MutableLiveData<>();
     private Context ctx ;
 
-    public MutableLiveData<List<Order>> getData() {
+    public LiveData<List<Order>> getData() {
         return data;
     }
 
     FirebaseFirestore cl = FirebaseFirestore.getInstance();
     SharedPreferencesManager spm;
 
-    void loadTicket() {
+    void loadTicket(Call<Order> call) {
         try {
             String uid = spm.getUID();
             //getdata
@@ -54,6 +56,10 @@ public class HoaDonChuaNhanViewModel extends ViewModel {
                                 _data.add(_order);
                         }
                         data.setValue(_data);
+                        call.onPick(null);
+                    }
+                    else{
+                        data.setValue(new ArrayList<>());
                     }
             }).addOnFailureListener(f->{
                         Log.e("data","data is null");
@@ -65,8 +71,26 @@ public class HoaDonChuaNhanViewModel extends ViewModel {
             e.printStackTrace();
         }
     }
+    void xoa_order(Order data){
+        cl.collection(DbCloud._order).whereEqualTo("id",data.id).get().addOnCompleteListener(r->{
+            if(!r.getResult().getDocuments().isEmpty()){
+                r.getResult().getDocuments().forEach(documentSnapshot ->{
+                    String docId = documentSnapshot.getReference().getId();
+                    cl.collection(DbCloud._order).document(docId).delete().addOnCompleteListener(e->{
+                        //update lai data
+                        loadTicket(new Call<Order>() {
+                            @Override
+                            public void onPick(Order e) {
+                            }
+                        });
+                        cl.collection(DbCloud._da_nhan).add(data);
+                    });
+                });
+            }
+        });
+    }
 
-    public void scanToNhanDo(Order data) {
+    public void scanToNhanDo(Order data, Call<Order> update ){
         LayoutInflater inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View root = inflater.inflate(R.layout.item_barcode, null,false);
         ImageView imageView = root.findViewById(R.id.imageView);
@@ -78,6 +102,14 @@ public class HoaDonChuaNhanViewModel extends ViewModel {
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setView(root);
         builder.setTitle("Scan");
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //remove and add on da nhan
+                xoa_order(data);
+                update.onPick(data);
+            }
+        });
         AlertDialog dialog = builder.create();
         dialog.show();
     }
