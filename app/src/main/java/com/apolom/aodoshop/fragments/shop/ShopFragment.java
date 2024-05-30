@@ -2,11 +2,13 @@ package com.apolom.aodoshop.fragments.shop;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
@@ -19,6 +21,8 @@ import com.apolom.aodoshop.fragments.hoa_don_chua_nhan.HoaDonChuaNhanFragment;
 import com.apolom.aodoshop.helper.ShopFragmentPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.Objects;
 
 public class ShopFragment extends Fragment {
 
@@ -38,13 +42,17 @@ public class ShopFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shop, container, false);
          tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
-        adapter= new ShopFragmentPagerAdapter(this.getActivity());
+        adapter= new ShopFragmentPagerAdapter(this.requireActivity());
+
         viewPager.setAdapter(adapter);
         viewPager.canScrollHorizontally(2);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Intent intent = new Intent("com.apolom.aodoshop.UPDATE");
+                intent.putExtra("data", tab.getPosition());
+                requireActivity().sendBroadcast(intent);
             }
 
             @Override
@@ -57,6 +65,8 @@ public class ShopFragment extends Fragment {
 
             }
         });
+
+
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {
                     switch (position) {
@@ -80,8 +90,7 @@ public class ShopFragment extends Fragment {
         return view;
     }
      public void reloadCurrentTab(int pos) {
-//        int currentItem = viewPager.getCurrentItem();
-//       adapter.notifyItemChanged(currentItem);
+
          Log.e("reloadddd","calll");
     }
 

@@ -20,9 +20,9 @@ public class ThueTicketAdapter extends RecyclerView.Adapter<ThueTicketAdapter.Vi
     private List<Order> mData;
     private Context ctx;
     private LayoutInflater mInflater;
-    private Call callback;
+    private Call<Order> callback;
 
-    public ThueTicketAdapter(Context context, List<Order> data,Call call) {
+    public ThueTicketAdapter(Context context, List<Order> data,Call<Order> call) {
         this.callback = call;
         this.mInflater = LayoutInflater.from(context);
         ctx = context;
@@ -46,7 +46,7 @@ public class ThueTicketAdapter extends RecyclerView.Adapter<ThueTicketAdapter.Vi
         if(item.orderType.equals("thue")) {
             holder.setText(item.startDate,item.endDate, item.id, item.productName, String.format("%d",item.quantity), item.size);
         }
-        holder.addCallback(callback,item.id );
+        holder.addCallback(callback,item);
 
 
     }
@@ -83,7 +83,7 @@ public class ThueTicketAdapter extends RecyclerView.Adapter<ThueTicketAdapter.Vi
             traBtn = _root.findViewById(R.id.item_thue_ticket_tra_btn);
 
         }
-        public void addCallback(Call call,String e){
+        public void addCallback(Call<Order> call,Order e){
             traBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

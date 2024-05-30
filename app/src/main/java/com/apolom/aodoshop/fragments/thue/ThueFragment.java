@@ -4,6 +4,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,7 +47,7 @@ public class ThueFragment extends Fragment {
         adapter = new ThueTicketAdapter(requireContext(), data, new Call<Order>() {
             @Override
             public void onPick(Order e) {
-                Toast.makeText(getContext(),"click"+e.id,Toast.LENGTH_SHORT).show();
+                mViewModel.remove(e);
 
             }
         });
@@ -74,5 +78,35 @@ public class ThueFragment extends Fragment {
 
 
 
+    }
+
+    private BroadcastReceiver myBroadcastReceiver;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Initialize the BroadcastReceiver
+        myBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Update the UI with data from the broadcast
+                String data = intent.getStringExtra("data");
+            try{
+                    mViewModel.loadTicket();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter("com.apolom.aodoshop.UPDATE");
+        requireActivity().registerReceiver(myBroadcastReceiver, filter, Context.RECEIVER_NOT_EXPORTED);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Unregister the BroadcastReceiver
+        requireActivity().unregisterReceiver(myBroadcastReceiver);
     }
 }

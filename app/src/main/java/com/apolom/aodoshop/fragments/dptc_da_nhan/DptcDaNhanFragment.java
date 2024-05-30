@@ -3,6 +3,10 @@ package com.apolom.aodoshop.fragments.dptc_da_nhan;
 import androidx.lifecycle.Observer;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -99,5 +103,44 @@ public class DptcDaNhanFragment extends Fragment {
             }
         });
 
+    }
+
+    private BroadcastReceiver myBroadcastReceiver;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Initialize the BroadcastReceiver
+        myBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Update the UI with data from the broadcast
+                String data = intent.getStringExtra("data");
+
+
+                   try{
+                       mViewModel.loadTicket(new Call<Order>() {
+                           @Override
+                           public void onPick(Order e) {
+
+                           }
+                       });
+                   }catch (Exception e){
+                       e.printStackTrace();
+                   }
+
+            }
+        };
+
+        // Register the BroadcastReceiver
+        IntentFilter filter = new IntentFilter("com.apolom.aodoshop.UPDATE");
+        requireActivity().registerReceiver(myBroadcastReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Unregister the BroadcastReceiver
+        requireActivity().unregisterReceiver(myBroadcastReceiver);
     }
 }

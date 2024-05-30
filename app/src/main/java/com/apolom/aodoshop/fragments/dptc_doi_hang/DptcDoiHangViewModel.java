@@ -41,11 +41,11 @@ public class DptcDoiHangViewModel extends ViewModel {
         cl =  FirebaseFirestore.getInstance();
     }
     void take(Order data){
-        cl.collection(DbCloud._tra).whereEqualTo("id",data.id).get().addOnCompleteListener(r->{
+        cl.collection(DbCloud._doi).whereEqualTo("id",data.id).get().addOnCompleteListener(r->{
             if(!r.getResult().getDocuments().isEmpty()){
                 r.getResult().getDocuments().forEach(documentSnapshot ->{
                     String docId = documentSnapshot.getId();
-                    cl.collection(DbCloud._tra).document(docId).delete().addOnCompleteListener(e->{
+                    cl.collection(DbCloud._doi).document(docId).delete().addOnCompleteListener(e->{
                         loadTicket(new Call<Order>() {
                             @Override
                             public void onPick(Order e) {

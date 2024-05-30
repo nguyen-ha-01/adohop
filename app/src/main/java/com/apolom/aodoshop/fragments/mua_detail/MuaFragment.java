@@ -163,10 +163,11 @@ public class MuaFragment extends Fragment {
             @Override
             public void onClick(View v) {try {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(requireContext());
-                String idOrder= mViewModel.addOrder(sharedPreferencesManager.getUID());
+
 
                 long money = getArguments().getLong("money");
                 if(money>Long.getLong(total.getText().toString())){
+                    String idOrder= mViewModel.addOrder(sharedPreferencesManager.getUID());
                     Bundle b = new Bundle();
                     b.putString("id", idOrder);
                     controller.navigate(R.id.action_muaFragment_to_thanhToanThanhCongFragment, b);

@@ -179,7 +179,11 @@ public class DptcDaNhanViewModel extends ViewModel {
         Button  add = root.findViewById(R.id.dialog_size_increase);
         MaterialButton huy = root.findViewById(R.id.dialog_size_huy_btn);
         MaterialButton doi = root.findViewById(R.id.dialog_size_btn_doi);
-        newSize.setValue(Integer.valueOf(e.size));
+        try{
+            newSize.setValue(Integer.valueOf(e.size));
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
         newSize.observe(owner, new Observer<Integer>() {
             @SuppressLint("DefaultLocale")
             @Override
@@ -215,6 +219,7 @@ public class DptcDaNhanViewModel extends ViewModel {
         doi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                e.size = newSize.getValue().toString();
                 doi_size_call(e, new Call<Boolean>() {
                     @Override
                     public void onPick(Boolean e) {
