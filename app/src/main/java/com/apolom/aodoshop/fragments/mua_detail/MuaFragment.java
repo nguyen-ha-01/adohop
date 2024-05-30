@@ -163,17 +163,10 @@ public class MuaFragment extends Fragment {
             @Override
             public void onClick(View v) {try {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(requireContext());
-
-
-                long money = getArguments().getLong("money");
-                if(money>Long.getLong(total.getText().toString())){
                     String idOrder= mViewModel.addOrder(sharedPreferencesManager.getUID());
                     Bundle b = new Bundle();
                     b.putString("id", idOrder);
                     controller.navigate(R.id.action_muaFragment_to_thanhToanThanhCongFragment, b);
-                }else {
-                    Toast.makeText(requireContext(),"vui long nap them tien vao tai khoan",Toast.LENGTH_SHORT).show();
-                }
             }catch (Exception e){
                 e.printStackTrace();
             }

@@ -236,16 +236,10 @@ public class DetailThueFragment extends Fragment {
             public void onClick(View v) {
                 try {
                     SharedPreferencesManager   share = new SharedPreferencesManager(requireContext()) ;
-
-                    long money = getArguments().getLong("money");
-                    if(money>Long.getLong(total_price.getText().toString())){
                         String _id = mViewModel.addOrder(share.getUID());
                         Bundle b = new Bundle();
                         b.putString("id", _id);
                         navController.navigate(R.id.action_detailThueFragment_to_thanhToanThanhCongFragment,b);
-                    }else {
-                        Toast.makeText(requireActivity(),"vui long nap them tien vao tai khoan",Toast.LENGTH_SHORT).show();
-                    }
                 }catch (Exception e){
                     Toast.makeText(requireContext(),"something work on order",Toast.LENGTH_SHORT);
                 }
