@@ -111,7 +111,7 @@ public class DptcTraHangFragment extends Fragment {
                 // Update the UI with data from the broadcast
                 String data = intent.getStringExtra("data");
 
-try{
+            try{
                     mViewModel.loadTicket(new Call<Order>() {
                         @Override
                         public void onPick(Order e) {

@@ -44,15 +44,26 @@ public class ThueFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mViewModel = new ThueViewModel(this.getContext());
         data = new ArrayList<>();
+
+        View view =  inflater.inflate(R.layout.fragment_thue, container, false);
+        recyclerView = view.findViewById(R.id.frag_thue_recycle);
         adapter = new ThueTicketAdapter(requireContext(), data, new Call<Order>() {
             @Override
             public void onPick(Order e) {
-                mViewModel.remove(e);
+                mViewModel.remove(e, new Call<Order>() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onPick(Order e) {
+                        data.removeIf(d->{
+                            if (d.id.equals(e.id))return true;
+                            else return false;
+                        });
+                        adapter.notifyDataSetChanged();
+                    }
+                });
 
             }
         });
-        View view =  inflater.inflate(R.layout.fragment_thue, container, false);
-        recyclerView = view.findViewById(R.id.frag_thue_recycle);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));

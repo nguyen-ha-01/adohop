@@ -13,7 +13,9 @@ import com.apolom.aodoshop.helper.Call;
 import com.apolom.aodoshop.models.Order;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.SuccessContinuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -63,15 +65,23 @@ public class ThueViewModel extends ViewModel {
         }
     }
 
-    public void remove(Order e) {
+    public void remove(Order e,Call<Order> update) {
         cl.collection(DbCloud._order).whereEqualTo("id",e.id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                 task.getResult().getDocuments().forEach(e->{
-                    cl.collection(DbCloud._order).document(e.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                 task.getResult().getDocuments().forEach(doc->{
+                    cl.collection(DbCloud._order).document(doc.getId()).delete().continueWith(new Continuation<Void, Object>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                        public Object then(@NonNull Task<Void> task) throws Exception {
                             loadTicket();
+                            return null;
+                        }
+                    }).onSuccessTask(new SuccessContinuation<Object, Object>() {
+                        @NonNull
+                        @Override
+                        public Task<Object> then(Object o) throws Exception {
+                            update.onPick(e);
+                            return null;
                         }
                     });
                  });
