@@ -16,8 +16,8 @@ public class SharedPreferencesManager {
     public void saveUID(String uid) {
         editor.putString(KEY_UID, uid);
         editor.apply();
-        editor.commit();
-        sharedPreferences.notify();
+
+
 
     }
 

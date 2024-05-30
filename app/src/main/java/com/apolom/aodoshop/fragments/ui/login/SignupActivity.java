@@ -1,9 +1,12 @@
 package com.apolom.aodoshop.fragments.ui.login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apolom.aodoshop.MainActivity;
 import com.apolom.aodoshop.databinding.ActivitySignupBinding;
 
 public class SignupActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         signupViewModel = new SignupViewModel(this);
+        Context c = this;
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
@@ -41,6 +46,21 @@ public class SignupActivity extends AppCompatActivity {
 
                 signupViewModel.signup(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+        signupViewModel.getUserState().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                try{
+                    if(!s.isEmpty()){
+                        Intent intent = new Intent(c, MainActivity.class);
+                        c.startActivity(intent);
+                    }else {
+                        Toast.makeText(c,"have error when create account",Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 
 import com.apolom.aodoshop.MainActivity;
+import com.apolom.aodoshop.models.UserData;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.List;
 
@@ -43,7 +45,6 @@ public class SignupViewModel extends ViewModel {
         this.ctx = ctx;
         try {
             _share.clearUID();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -83,8 +84,16 @@ public class SignupViewModel extends ViewModel {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         String uid = task.getResult().getUser().getUid();
                         _share.saveUID(uid);
-                        DbCloud cloud = new DbCloud("");
-                        cloud.createUserOnDB(uid,password,email,email);
+                        UserData userData = new UserData(uid,email,email,password,0L);
+                        try {
+                            cl.collection(DbCloud.user).document(uid)
+                                    .set(userData.toMap(), SetOptions.merge()).addOnCompleteListener(t->{
+                                        userLiveData.setValue(uid);
+                                    });
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
@@ -92,7 +101,7 @@ public class SignupViewModel extends ViewModel {
 
     public void signup(String username, String password) {
         try {
-            checkIfEmailExists(username, password);
+            createNewAccount(username, password);
 
         } catch (Exception e) {
             e.printStackTrace();
