@@ -161,20 +161,24 @@ public class MuaFragment extends Fragment {
 
         thanh_toan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {try {
+            public void onClick(View v) {
+                try {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(requireContext());
-                    String idOrder= mViewModel.addOrder(sharedPreferencesManager.getUID());
-                    Bundle b = new Bundle();
-                    b.putString("id", idOrder);
-                    controller.navigate(R.id.action_muaFragment_to_thanhToanThanhCongFragment, b);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+                     mViewModel.addOrder(sharedPreferencesManager.getUID());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
-
+        mViewModel.idOrder.observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s!= ""){
+                    Bundle b = new Bundle();
+                    b.putString("id", s);
+                    controller.navigate(R.id.action_muaFragment_to_thanhToanThanhCongFragment, b);
+                }
+            }
+        });
     }
-
-
-
 }

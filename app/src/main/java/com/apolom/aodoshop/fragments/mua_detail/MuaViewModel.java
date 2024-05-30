@@ -19,7 +19,7 @@ public class MuaViewModel extends ViewModel {
 
     private final MutableLiveData<Product> product = new MutableLiveData<>();
     private final MutableLiveData<Integer> total = new MutableLiveData<>(1);
-    private final MutableLiveData<Integer> money = new MutableLiveData<>(1);
+    public final MutableLiveData<String> idOrder = new MutableLiveData<>("");
     private final MutableLiveData<String> size = new MutableLiveData<>();
     private final MutableLiveData<Long> total_pay = new MutableLiveData<>(1L);
     private final MutableLiveData<Integer> total_count = new MutableLiveData<>(1);
@@ -38,12 +38,7 @@ public class MuaViewModel extends ViewModel {
     public void setProduct(Product p){
         product.setValue(p);
     }
-    public LiveData<Integer> get_money() {
-        return money;
-    }
-    public void setMoney(int p){
-        money.setValue(p);
-    }
+
     public void changeTotal(int count){
         int old = total.getValue();
         total.setValue(old+count);
@@ -51,10 +46,9 @@ public class MuaViewModel extends ViewModel {
     public static String generateRandomId() {
         return UUID.randomUUID().toString();
     }
-    String addOrder(String uid){
-        AtomicReference<String> idOrder = new AtomicReference<>("");
-        try{
+    public void addOrder(String uid){
 
+        try{
             String id = DbCloud._mua_first_tail+generateRandomId();
             Order order = new Order(product.getValue().name,total_pay.getValue(),total_count.getValue().longValue(),uid,id, size.getValue(),"","","mua");
             FirebaseFirestore f= FirebaseFirestore.getInstance();
@@ -65,15 +59,15 @@ public class MuaViewModel extends ViewModel {
                     f.collection(DbCloud._order).add(order);
                     Map<String,Object> data = new HashMap<>();
                     data.put("money",money- total_pay.getValue());
-                    f.collection(DbCloud.user).document(uid).set(data, SetOptions.mergeFields("money"));
-                    idOrder.set(id);
+                    f.collection(DbCloud.user).document(uid).set(data, SetOptions.mergeFields("money")).addOnCompleteListener(c->{
+                        idOrder.setValue(id);
+                    });
                 }
             });
-
         }catch (Exception e){
             e.printStackTrace();
         }
-        return idOrder.get();
+
     }
 
     public void setSize(String e) {

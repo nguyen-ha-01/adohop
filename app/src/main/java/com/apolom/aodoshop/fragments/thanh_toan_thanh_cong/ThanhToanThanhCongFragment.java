@@ -36,12 +36,12 @@ public class ThanhToanThanhCongFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_thanh_toan_thanh_cong, container, false);
-        id = view.findViewById(R.id.item_ticket_ma_nhan_do);
+        id = view.findViewById(R.id.tttc_ma_nhan_do);
         try {
             if(getArguments().isEmpty()){}
             else {
                 String _id = getArguments().getString("id","");
-                if(_id!= ""){id.setText(_id);}
+                if(_id != ""){id.setText(_id);}
             }
         }catch (Exception e){e.printStackTrace();}
         return view;
