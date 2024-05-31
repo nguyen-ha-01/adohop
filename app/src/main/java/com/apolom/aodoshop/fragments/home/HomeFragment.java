@@ -111,6 +111,7 @@ public class HomeFragment extends Fragment {
     @SuppressLint("DefaultLocale")
     private void updateTheChat(Product p2) {
         mua.setText(p2.name, p2.thumb, String.format("%d%s", p2.price, p2.type));
+        mua.setImageResource(R.drawable.img_1);
 
         mua.addCallback(new View.OnClickListener() {
             @Override

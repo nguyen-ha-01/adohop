@@ -1,6 +1,7 @@
 package com.apolom.aodoshop.fragments.profile;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.apolom.aodoshop.R;
 import com.apolom.aodoshop.fragments.login_signup.ui.login.LoginActivity;
+import com.apolom.aodoshop.models.UserData;
 import com.google.android.material.button.MaterialButton;
 
 public class ProfileFragment extends Fragment {
@@ -48,6 +50,16 @@ public class ProfileFragment extends Fragment {
         username = view.findViewById(R.id.fragment_profile_username);
 
         Context ctx = requireContext();
+        mViewModel.userData.observe(getViewLifecycleOwner(), new Observer<UserData>() {
+            @Override
+            public void onChanged(UserData userData) {
+                if(userData!= null){
+                    username.setText(userData.email);
+                }
+            }
+        });
+        mViewModel.getUserName();
+//        username.setText(mViewModel.getUserName());
         _logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

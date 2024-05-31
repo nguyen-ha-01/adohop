@@ -21,8 +21,8 @@
             android:id="@+id/fragment_mua_img"
             android:layout_width="match_parent"
             android:layout_height="224dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img" />
+            android:scaleType="fitXY"
+            android:src="@drawable/tc" />
 
         <TextView
             android:id="@+id/fragment_mua_name"
