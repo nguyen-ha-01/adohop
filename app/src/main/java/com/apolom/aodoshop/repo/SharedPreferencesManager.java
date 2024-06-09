@@ -63,7 +63,10 @@ public class SharedPreferencesManager {
     }
 
     public void clearUID() {
-        editor.remove(KEY_UID);
+        editor.remove(NAME);
+        editor.remove(MSV);
+        editor.remove(PASSWORD);
+        editor.remove(MONEY);
         editor.apply();
     }
 }

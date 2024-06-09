@@ -34,6 +34,7 @@ import com.apolom.aodoshop.helper.SizeGridAdapter;
 import com.apolom.aodoshop.models.Product;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
@@ -191,7 +192,15 @@ public class DetailThueFragment extends Fragment {
             @Override
             public void onChanged(String s) {
                 int day = mViewModel.calculateDaysBetween(mViewModel.getDate_start().getValue(),s);
-                mViewModel.setTotal_pay(mViewModel.get_product().getValue().price, day);
+                if(day<0){
+                    Toast.makeText(requireContext(),"ngày trả phải muộn hơn ngày nhận",Toast.LENGTH_LONG).show();
+                }
+                else if (day==0){
+                    Toast.makeText(requireContext(),"thời gian thuê phải lớn hơn 1 ngày",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    mViewModel.setTotal_pay(mViewModel.get_product().getValue().price, day);
+                }
             }
         });
         mViewModel.get_total().observe(getViewLifecycleOwner(), new Observer<Integer>() {

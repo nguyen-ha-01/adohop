@@ -91,11 +91,13 @@ public class DetailThueViewModel extends ViewModel {
             Date date2 = dateFormat.parse(dateStr2);
 
             // Tính sự khác biệt bằng mili giây
-            long differenceInMillis = Math.abs(date2.getTime() - date1.getTime());
+            long differenceInMillis = date2.getTime() - date1.getTime();
 
             // Chuyển đổi từ mili giây sang ngày
             long differenceInDays = differenceInMillis / (24 * 60 * 60 * 1000);
+            if (differenceInDays>=0)
             return (int) differenceInDays;
+            else return -1;
         } catch (ParseException e) {
             e.printStackTrace();
             return -1; // Trả về -1 trong trường hợp có lỗi

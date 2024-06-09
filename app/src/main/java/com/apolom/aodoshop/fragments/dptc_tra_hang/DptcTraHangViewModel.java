@@ -20,7 +20,7 @@ public class DptcTraHangViewModel extends ViewModel {
 
     private SharedPreferencesManager sharedPreferencesManager;
     private Context ctx;
-    private FirebaseFirestore cl;
+
     public LiveData<List<Order>> getData() {
         return data;
     }
