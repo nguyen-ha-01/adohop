@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 import android.util.Patterns;
@@ -13,60 +14,47 @@ import com.apolom.aodoshop.fragments.login_signup.data.LoginRepository;
 import com.apolom.aodoshop.models.UserData;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
+import com.apolom.aodoshop.repo.UserDataRepository;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirestoreRegistrar;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.concurrent.CompletableFuture;
+
 
 public class LoginViewModel extends ViewModel {
 
-    private FirebaseAuth mAuth;
-    private SharedPreferencesManager _share ;
-    private MutableLiveData<Boolean> dataSavedLiveData=  new MutableLiveData<>(false);
+
+    private UserDataRepository repository;
+    private SharedPreferencesManager _share;
+    private MutableLiveData<Boolean> dataSavedLiveData = new MutableLiveData<>(false);
 
 
-    private MutableLiveData<String> userLiveData;
+    private MutableLiveData<UserData> userLiveData;
     private MutableLiveData<String> errorLiveData;
 
     LoginViewModel(Context ctx) {
-        mAuth = FirebaseAuth.getInstance();
+        repository =new UserDataRepository((Application) ctx.getApplicationContext());
+
         userLiveData = new MutableLiveData<>();
-        _share= new SharedPreferencesManager(ctx);
-        try{
-            String uid = _share.getUID();
-            if (uid!= null)
-            userLiveData.setValue(uid);
-            else{
-                userLiveData.setValue(mAuth.getCurrentUser().getUid());
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        _share = new SharedPreferencesManager(ctx);
         errorLiveData = new MutableLiveData<>();
     }
 
-    LiveData<String> getUserState() {
+    LiveData<UserData> getUserState() {
         return userLiveData;
     }
 
 
-    public void login(String email, String password) {
-        try{
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            FirebaseUser u = mAuth.getCurrentUser();
-                            userLiveData.setValue(u.getUid());
-                            _share.saveUID(u.getUid());
-                            Log.d("LOGIN","LOGINED WITH"+mAuth.getCurrentUser().getUid());
-                        } else {
-                            errorLiveData.setValue(task.getException().getMessage());
-                        }
-                    });
-        }catch (Exception e){
-            throw e;
+    public void login(String msv, String password) {
+        try {
+            CompletableFuture<UserData> data =  CompletableFuture.supplyAsync(()->{return repository.getUserByMsv(msv);});
+            _share.saveUserData(data.get());
+            userLiveData.setValue(data.get());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

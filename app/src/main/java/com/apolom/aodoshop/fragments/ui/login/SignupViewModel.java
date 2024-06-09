@@ -5,7 +5,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import com.apolom.aodoshop.MainActivity;
 import com.apolom.aodoshop.models.UserData;
 import com.apolom.aodoshop.repo.DbCloud;
 import com.apolom.aodoshop.repo.SharedPreferencesManager;
+import com.apolom.aodoshop.repo.UserDataRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -28,18 +32,17 @@ import java.util.List;
 public class SignupViewModel extends ViewModel {
 
 
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore cl;
+
     private SharedPreferencesManager _share;
     private MutableLiveData<Boolean> dataSavedLiveData = new MutableLiveData<>(false);
-
     private MutableLiveData<String> userLiveData;
-    private MutableLiveData<String> errorLiveData;
+    public MutableLiveData<String> errorLiveData;
     private Context ctx;
-
+    private UserDataRepository repository;
     public SignupViewModel(Context ctx) {
-        cl = FirebaseFirestore.getInstance();
-        mAuth = FirebaseAuth.getInstance();
+        repository = new UserDataRepository((Application) ctx.getApplicationContext());
+
+
         userLiveData = new MutableLiveData<>();
         _share = new SharedPreferencesManager(ctx);
         this.ctx = ctx;
@@ -55,53 +58,24 @@ public class SignupViewModel extends ViewModel {
         return userLiveData;
     }
 
-    private void checkIfEmailExists(final String email, final String password) {
-        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-            @Override
-            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+    private Boolean createNewAccount(String name,String msv, String password) {
+        UserData userData = new UserData(msv,name,password,0L);
+        return  repository.insert(userData);
 
-                if (task.isSuccessful()) {
-                    List<String> signInMethods = task.getResult().getSignInMethods();
-                    if (signInMethods != null && signInMethods.isEmpty()) {
-                        // Email does not exist, create new account
-                        createNewAccount(email, password);
-                    } else {
-                        // Email already exists
-                        Toast.makeText(ctx, "This email is already registered.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Log.e("eee", "Error checking if email exists", task.getException());
-                    Toast.makeText(ctx, "Error checking if email exists", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
-
-    private void createNewAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        String uid = task.getResult().getUser().getUid();
-                        _share.saveUID(uid);
-                        UserData userData = new UserData(uid,email,email,password,0L);
-                        try {
-                            cl.collection(DbCloud.user).document(uid)
-                                    .set(userData.toMap(), SetOptions.merge()).addOnCompleteListener(t->{
-                                        userLiveData.setValue(uid);
-                                    });
-
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
-
-
-    public void signup(String username, String password) {
+    public void signup(String msv,String name, String password) {
         try {
-            createNewAccount(username, password);
+            Boolean add = createNewAccount(name, msv, password);
+            if(add)
+            {
+                _share.saveUserData(new UserData(msv,name,password,0L));
+                userLiveData.setValue(msv);
+            }
+            else {
+                errorLiveData.setValue("can't create account");
+            }
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,12 +1,15 @@
 package com.apolom.aodoshop.fragments.hoa_don_chua_nhan;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.apolom.aodoshop.R;
@@ -26,6 +30,7 @@ import com.apolom.aodoshop.fragments.shop.ShopFragment;
 import com.apolom.aodoshop.helper.Call;
 import com.apolom.aodoshop.helper.HoaDonChuaNhanAdapter;
 import com.apolom.aodoshop.models.Order;
+import com.apolom.aodoshop.service.QrService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +56,7 @@ public class HoaDonChuaNhanFragment extends Fragment {
             @Override
             public void onPick(Order e) {
 
-                mViewModel.scanToNhanDo(e,e1 -> {
+              scanToNhanDo(e,e1 -> {
                     orders.removeIf(new Predicate<Order>() {
                         @Override
                         public boolean test(Order order) {
@@ -136,5 +141,28 @@ try{
         super.onPause();
         // Unregister the BroadcastReceiver
         requireActivity().unregisterReceiver(myBroadcastReceiver);
+    }
+    public void scanToNhanDo(Order data, Call<Order> update ){
+        LayoutInflater inflater = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View root = inflater.inflate(R.layout.item_barcode, null,false);
+        ImageView imageView = root.findViewById(R.id.imageView);
+        QrService service = new QrService();
+        try {
+            Bitmap b = service.generateBarcode(data.id);
+            imageView.setImageBitmap(b);
+        }catch (Exception e){e.printStackTrace();}
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(root);
+        builder.setTitle("Scan");
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //remove and add on da nhan
+                mViewModel.xoa_order(data);
+                update.onPick(data);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

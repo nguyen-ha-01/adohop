@@ -59,7 +59,7 @@ public class DetailThueFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mViewModel = new DetailThueViewModel();
+        mViewModel = new DetailThueViewModel(requireContext());
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -115,7 +115,7 @@ public class DetailThueFragment extends Fragment {
                             BottomNavigationView mainView = mainActivity.findViewById(R.id.nav_view);
                             mainView.setVisibility(View.VISIBLE);
                         }
-                        navController.navigate(R.id.action_muaFragment_to_fragment_home);
+                        navController.navigate(R.id.action_detailThueFragment_to_fragment_home);
                     }
                 }, _m+"vnd--");
 
@@ -235,11 +235,18 @@ public class DetailThueFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    SharedPreferencesManager   share = new SharedPreferencesManager(requireContext()) ;
-                        String _id = mViewModel.addOrder(share.getUID());
-                        Bundle b = new Bundle();
-                        b.putString("id", _id);
-                        navController.navigate(R.id.action_detailThueFragment_to_thanhToanThanhCongFragment,b);
+
+                        String _id = mViewModel.addOrder(new Call<String>() {
+                            @Override
+                            public void onPick(String e) {
+                                Toast.makeText(requireContext(),"money not enough",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        if(_id!= null){
+                            Bundle b = new Bundle();
+                            b.putString("id", _id);
+                            navController.navigate(R.id.action_detailThueFragment_to_thanhToanThanhCongFragment,b);
+                        }
                 }catch (Exception e){
                     Toast.makeText(requireContext(),"something work on order",Toast.LENGTH_SHORT);
                 }

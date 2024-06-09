@@ -31,10 +31,11 @@ public class SignupActivity extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        signupViewModel = new SignupViewModel(this);
+        signupViewModel = new SignupViewModel(this.getApplicationContext());
         Context c = this;
 
         final EditText usernameEditText = binding.username;
+        final  EditText msv = binding.msv;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.signupBtn;
 
@@ -44,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                signupViewModel.signup(usernameEditText.getText().toString(),
+                signupViewModel.signup(msv.getText().toString(),usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
@@ -61,6 +62,12 @@ public class SignupActivity extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+            }
+        });
+        signupViewModel.errorLiveData.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(c,"s", Toast.LENGTH_SHORT).show();
             }
         });
     }

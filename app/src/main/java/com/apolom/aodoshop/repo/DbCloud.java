@@ -44,42 +44,4 @@ public class DbCloud {
 
 
 
-    public Boolean createUserOnDB(String userId, String pass, String name, String email) {
-        UserData userData = new UserData(userId,email,name,pass,0L);
-        try {
-            db.collection("users").document(userId)
-                    .set(userData.toMap(), SetOptions.merge());
-            return true;
-        }catch (Exception e){return false;}
-    }
-    public void initProduct() {
-            List<Long> size =   new ArrayList<>();
-        for(int i=30;i<=40;i++)size.add(Long.valueOf(i));
-        Product p2 = new Product("đồng phục thể chất",size,90000,"đồng","nam","mua ngay");
-        Product p1 = new Product("đồng phục quốc phòng",size,1000,"đồng/ngày","nam","thuê ngay");
-        db.collection(_quoc_phong).add(p1.toMap());
-        db.collection(_the_chat).document().set(p2.toMap(),SetOptions.merge());
-    }
-    public void addMoney(String uid, int money){
-        Map<String, Object> map = new HashMap<>();
-        db.collection("users").document(uid).get().addOnCompleteListener(
-                e->{
-                    long m = (long)e.getResult().get("money");
-                    map.put("money",money+m);
-                    db.collection("users").document(uid)
-                            .set(map,SetOptions.merge());
-                }
-        );
-
-    }
-    public UserData getUserInfo(String uid){
-        try {
-            Map<String ,Object> map = db.collection(user).document(uid)
-                    .get()
-                    .addOnCompleteListener(e->{}).getResult().getData();
-            return UserData.fromMap(uid,map);
-        }catch (Exception e){
-            return null;
-        }
-    }
 }

@@ -38,7 +38,8 @@ public class HomeFragment extends Fragment {
     private TextView name_tv,nap_tv,money_tv;
     ItemHome thue,mua;
     NavController navController;
-    DbCloud cl;
+
+
 
 
     public static HomeFragment newInstance() {
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        cl = new DbCloud("");
+
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mua = view.findViewById(R.id.fragment_home_mua);
@@ -87,7 +88,6 @@ public class HomeFragment extends Fragment {
                     name_tv.setText(u.displayName);
                 }
             });
-
 
         }catch (Exception e){
             Log.e("user",e.toString());

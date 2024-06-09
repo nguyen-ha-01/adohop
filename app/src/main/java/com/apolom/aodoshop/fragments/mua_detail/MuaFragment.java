@@ -57,7 +57,7 @@ public class MuaFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new MuaViewModel();
+        mViewModel = new MuaViewModel(requireContext());
     }
 
     @Override
@@ -163,8 +163,13 @@ public class MuaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(requireContext());
-                     mViewModel.addOrder(sharedPreferencesManager.getUID());
+
+                     mViewModel.addOrder(new Call<String>() {
+                         @Override
+                         public void onPick(String e) {
+                             Toast.makeText(requireContext(),"money not enough",Toast.LENGTH_SHORT).show();
+                         }
+                     });
                 }catch (Exception e){
                     e.printStackTrace();
                 }

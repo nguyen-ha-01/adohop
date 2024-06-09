@@ -12,12 +12,12 @@
     tools:context=".fragments.login_signup.ui.login.LoginActivity">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/msvLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
-        android:autofillHints="@string/prompt_email"
-        android:hint="@string/prompt_email"
+
+        android:hint="Ma sinh vien"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/msvLogin" />
 
     <Button
         android:id="@+id/login"

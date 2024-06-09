@@ -28,6 +28,7 @@ public class SizeGridAdapter extends RecyclerView.Adapter<SizeGridAdapter.ViewHo
         this.mInflater = LayoutInflater.from(context);
         ctx = context;
         this.mData = data;
+        callback.onPick(mData.get(0)+"");
 
     }
     public Integer getSize() {return mData.size();}
@@ -45,6 +46,7 @@ public class SizeGridAdapter extends RecyclerView.Adapter<SizeGridAdapter.ViewHo
         Long item = mData.get(position);
         holder.myTextView.setText(String.format("%d", item));
         holder.setBackground(selected==position,ctx);
+
         holder.frame.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -41,7 +41,9 @@ public class NapTienFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         MainActivity mainActivity = (MainActivity) getActivity();
+        mViewModel = new NapTienViewModel(mainActivity.getApplicationContext());
         _share = new SharedPreferencesManager(getActivity());
         if (mainActivity != null) {
             BottomNavigationView mainView = mainActivity.findViewById(R.id.nav_view);
@@ -65,14 +67,17 @@ public class NapTienFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 try {
-                    int m;
-                    m = Integer.valueOf(_money.getText().toString());
-                    String uid = _share.getUID();
-                    Log.e("uid",uid);
-                    _db.addMoney(uid,m);
-                    navController.navigate(R.id.action_napTienFragment_to_giaoDichThanhCongItem);
+                    Long m;
+                    m = Long.valueOf(_money.getText().toString());
+                    boolean e = mViewModel .nap(m);
+                    if(e) {
+                        navController.navigate(R.id.action_napTienFragment_to_giaoDichThanhCongItem);
+                    }
+                    else {
+                        throw new Exception("drop");
+                    }
                 }catch (Exception e){ Log.e("uid",""+e.toString());
-                    Toast.makeText(getActivity(),"drop money",Toast.LENGTH_SHORT);
+                    Toast.makeText(requireContext(),"drop money",Toast.LENGTH_SHORT);
                 }
 
 
@@ -81,11 +86,6 @@ public class NapTienFragment extends Fragment {
     }
 
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(NapTienViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 
 }

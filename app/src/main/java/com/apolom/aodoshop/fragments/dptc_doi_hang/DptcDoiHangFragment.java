@@ -1,5 +1,6 @@
 package com.apolom.aodoshop.fragments.dptc_doi_hang;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -8,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.apolom.aodoshop.R;
 import com.apolom.aodoshop.fragments.hoa_don_chua_nhan.HoaDonChuaNhanFragment;
@@ -29,6 +33,7 @@ import com.apolom.aodoshop.fragments.hoa_don_chua_nhan.HoaDonChuaNhanViewModel;
 import com.apolom.aodoshop.helper.Call;
 import com.apolom.aodoshop.helper.HoaDonChuaNhanAdapter;
 import com.apolom.aodoshop.models.Order;
+import com.apolom.aodoshop.service.QrService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,30 @@ public class DptcDoiHangFragment extends Fragment {
 
 
     HoaDonChuaNhanAdapter adapter;
+    public void scanToNhanDo(Order e, Call<Order> o) {
+
+        LayoutInflater inflater = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View root = inflater.inflate(R.layout.item_barcode, null,false);
+        ImageView imageView = root.findViewById(R.id.imageView);
+        QrService service = new QrService();
+        try {
+            Bitmap b = service.generateBarcode(e.id);
+            imageView.setImageBitmap(b);
+        }catch (Exception ex){ex.printStackTrace();}
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(root);
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                //remove and add on da nhan
+                mViewModel.take(e);
+                o.onPick(e);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.back_corner);
+        dialog.show();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -55,7 +84,7 @@ public class DptcDoiHangFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onPick(Order e) {
-                mViewModel.scanToNhanDo(e,e1 -> {
+                scanToNhanDo(e,e1 -> {
 
                     orders.removeIf(new Predicate<Order>() {
                         @Override

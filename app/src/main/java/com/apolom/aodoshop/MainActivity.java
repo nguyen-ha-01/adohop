@@ -35,7 +35,8 @@ import android.view.WindowInsetsController;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    DbCloud i = new DbCloud("");
+
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

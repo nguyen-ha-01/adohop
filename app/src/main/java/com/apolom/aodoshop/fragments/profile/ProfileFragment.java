@@ -2,7 +2,6 @@ package com.apolom.aodoshop.fragments.profile;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +52,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(UserData userData) {
                 if(userData!= null){
-                    username.setText(userData.email);
+                    username.setText(userData.msv);
                 }
             }
         });

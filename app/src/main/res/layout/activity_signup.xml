@@ -16,11 +16,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
-        android:autofillHints="@string/prompt_email"
-        android:hint="@string/prompt_email"
+        android:autofillHints="Ho va ten"
+        android:hint="Ho va ten"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/msv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:autofillHints="@string/prompt_email"
+        android:hint="Ma sinh vien"
+        android:inputType="text"
+        android:selectAllOnFocus="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +52,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/msvLogin" />
 
     <Button
         android:id="@+id/signup_btn_"

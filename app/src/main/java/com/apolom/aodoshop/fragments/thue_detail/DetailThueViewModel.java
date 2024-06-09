@@ -1,14 +1,21 @@
 package com.apolom.aodoshop.fragments.thue_detail;
 
+import android.app.Application;
+import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.apolom.aodoshop.helper.Call;
 import com.apolom.aodoshop.models.Order;
 import com.apolom.aodoshop.models.Product;
+import com.apolom.aodoshop.models.UserData;
 import com.apolom.aodoshop.repo.DbCloud;
+import com.apolom.aodoshop.repo.OrderRepository;
+import com.apolom.aodoshop.repo.SharedPreferencesManager;
+import com.apolom.aodoshop.repo.UserDataRepository;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -97,25 +104,52 @@ public class DetailThueViewModel extends ViewModel {
     public static String generateRandomId() {
         return UUID.randomUUID().toString();
     }
-    String addOrder(String uid){
+    OrderRepository repository;
+    UserDataRepository userDataRepository;
+    SharedPreferencesManager sharedPreferencesManager;
+    public DetailThueViewModel(Context context) {
+        sharedPreferencesManager = new SharedPreferencesManager(context);
+        repository = new OrderRepository((Application) context.getApplicationContext());
+        userDataRepository = new UserDataRepository((Application) context.getApplicationContext());
+    }
+    public boolean thanh_toan(long m){
         try{
-            String id = DbCloud._thue_first_tail+generateRandomId();
-            Order order = new Order(product.getValue().name,total_pay.getValue(),total_count.getValue().longValue(),uid,id, size.getValue(), date_start.getValue(),date_end.getValue(),"thue");
-            FirebaseFirestore f= FirebaseFirestore.getInstance();
-            f.collection(DbCloud.user).document(uid).get().addOnCompleteListener(d->{
-                long money = (long) d.getResult().get("money");
-                if(money>= total_pay.getValue()){
-                    f.collection(DbCloud._order).add(order);
-                    Map<String,Object> data = new HashMap<>();
-                    data.put("money",money- total_pay.getValue());
-                    f.collection(DbCloud.user).document(uid).set(data, SetOptions.mergeFields("money"));
-                }
-            });
-            return id;
+            UserData u = sharedPreferencesManager.getUserData() ;
+            u.money += m;
+            sharedPreferencesManager.saveUserData(u);
+            userDataRepository.update(u);
+            return true;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "";
+        return false;
+    }
+    String addOrder(Call<String> onError){
+
+        try {
+            long oldMoney = sharedPreferencesManager.getMoney();
+            String uid = sharedPreferencesManager.getUID();
+            if (oldMoney >= total_pay.getValue()) {
+                Product p = product.getValue();
+                Order order = new Order(p.name, total_pay.getValue(), Long.valueOf(total_count.getValue()), uid, generateRandomId(), size.getValue(), date_start.getValue(), date_end.getValue(), "thue");
+                repository.insert(order);
+
+                thanh_toan(total_pay.getValue());
+                return order.id;
+
+            }else {
+                onError.onPick("");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+
+        return null;
+
     }
 
 }

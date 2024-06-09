@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Product implements Serializable {
+
+    private int id;
     public  String name ;
     public List<Long> size;
     public String thumb;

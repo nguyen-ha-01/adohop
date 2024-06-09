@@ -1,5 +1,7 @@
 package com.apolom.aodoshop.fragments.dptc_da_nhan;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
 import android.annotation.SuppressLint;
@@ -19,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.apolom.aodoshop.R;
@@ -27,6 +31,7 @@ import com.apolom.aodoshop.helper.Call;
 import com.apolom.aodoshop.helper.DptcDaNhanAdapter;
 
 import com.apolom.aodoshop.models.Order;
+import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +59,12 @@ public class DptcDaNhanFragment extends Fragment {
             @Override
             public void onPick(Order e) {
                 //show size picker then remove it from da nhan then add to doi
-                mViewModel.doi_size(e,getViewLifecycleOwner());
+                doi_size(e,getViewLifecycleOwner());
             }
         }, new Call<Order>() {
             @Override
             public void onPick(Order e) {
-                mViewModel.tra_hang(e, new Call<Order>() {
+                tra_hang(e, new Call<Order>() {
                     @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onPick(Order e) {
@@ -87,6 +92,102 @@ public class DptcDaNhanFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext() ,LinearLayoutManager.VERTICAL, false));
 
         return view;
+    }
+    public void doi_size(Order e, LifecycleOwner owner){
+        LayoutInflater inflater = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View root = inflater.inflate(R.layout.dialog_doi_size, null,false);
+        TextView _new_size = root.findViewById(R.id.dialog_size);
+        Button minus= root.findViewById(R.id.dialog_size_decrease);
+        Button  add = root.findViewById(R.id.dialog_size_increase);
+        MaterialButton huy = root.findViewById(R.id.dialog_size_huy_btn);
+        MaterialButton doi = root.findViewById(R.id.dialog_size_btn_doi);
+        try{
+            mViewModel.newSize.setValue(Integer.valueOf(e.size));
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+        mViewModel.newSize.observe(owner, new Observer<Integer>() {
+            @SuppressLint("DefaultLocale")
+            @Override
+            public void onChanged(Integer integer) {
+                _new_size.setText(String.format("%d",integer));
+            }
+        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mViewModel.newSize.getValue()<44){
+                    mViewModel.newSize.setValue(1 + mViewModel.newSize.getValue());}
+            }
+        });
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mViewModel.newSize.getValue()>30) {
+                    mViewModel.newSize.setValue(mViewModel.newSize.getValue()-1);
+                }
+            }
+        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(root);
+        AlertDialog dialog = builder.create();
+
+        huy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        doi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                e.size = mViewModel.newSize.getValue().toString();
+                mViewModel.doi_size_call(e, new Call<Boolean>() {
+                    @Override
+                    public void onPick(Boolean e) {
+                        dialog.dismiss();
+                        mViewModel.loadTicket(new Call<Order>() {
+                            @Override
+                            public void onPick(Order e) {
+
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.back_corner);
+        dialog.show();
+    }
+    public void tra_hang(  Order e, Call<Order> onSuccess){
+        LayoutInflater inflater = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View root = inflater.inflate(R.layout.dialog_xac_nhan_tra_hang, null,false);
+        MaterialButton huy,tra;
+        huy = root.findViewById(R.id.dialog_xac_nhan_tra_hang_huy_btn);
+        tra = root.findViewById(R.id.dialog_xac_nhan_tra_hang_tra_btn);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(root);
+
+        AlertDialog dialog = builder.create();
+        huy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        tra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.tra_hang_call(e);
+                onSuccess.onPick(e);
+                dialog.dismiss();
+
+            }
+        });
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.back_corner);
+        dialog.show();
     }
 
     @Override
@@ -116,8 +217,6 @@ public class DptcDaNhanFragment extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 // Update the UI with data from the broadcast
                 String data = intent.getStringExtra("data");
-
-
                    try{
                        mViewModel.loadTicket(new Call<Order>() {
                            @Override

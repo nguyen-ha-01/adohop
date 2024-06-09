@@ -26,6 +26,8 @@ import com.apolom.aodoshop.MainActivity;
 import com.apolom.aodoshop.R;
 import com.apolom.aodoshop.databinding.ActivityLoginBinding;
 import com.apolom.aodoshop.fragments.ui.login.SignupActivity;
+import com.apolom.aodoshop.models.UserData;
+import com.apolom.aodoshop.models.db.UserDao;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,20 +42,19 @@ public class LoginActivity extends AppCompatActivity {
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        loginViewModel = new LoginViewModel(this);
+        loginViewModel = new LoginViewModel(this.getApplicationContext());
 
-        final EditText usernameEditText = binding.username;
+        final EditText msv = binding.msvLogin;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final Button signup = binding.signup;
 
-        loginViewModel.getUserState().observe(this, new Observer<String>() {
+        loginViewModel.getUserState().observe(this, new Observer<UserData>() {
             @Override
-            public void onChanged(@Nullable String uid) {
-                if(uid != null){
+            public void onChanged(@Nullable UserData data) {
+                if(data != null){
                     Intent i = new Intent(getApplicationContext(),MainActivity.class);
-                    i.putExtra("uid",uid);
-
+                    i.putExtra("uid",data.msv);
                     startActivity(i);
                 }
                 else {
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.login(usernameEditText.getText().toString(),
+                loginViewModel.login(msv.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });

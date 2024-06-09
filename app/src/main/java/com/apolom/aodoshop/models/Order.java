@@ -1,16 +1,25 @@
 package com.apolom.aodoshop.models;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+@Entity(tableName = "Me_order")
+public class Order {
 
-public class Order implements Serializable {
+
     public String productName;
     public long price;
     public long quantity;
-    public String uid,id;
+    @PrimaryKey
+    @NonNull
+    public String id;
+    public  String uid;
     public String startDate;
     public String endDate;
     public String orderType;

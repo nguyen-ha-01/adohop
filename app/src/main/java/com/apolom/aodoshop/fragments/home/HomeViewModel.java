@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.apolom.aodoshop.MainActivity;
 import com.apolom.aodoshop.models.Product;
 import com.apolom.aodoshop.models.UserData;
 import com.apolom.aodoshop.repo.DbCloud;
@@ -24,97 +25,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeViewModel extends ViewModel {
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+
     private final MutableLiveData<Product> quocPhongLiveData = new MutableLiveData<>();
     private final MutableLiveData<Product> theChatLiveData = new MutableLiveData<>();
     private final MutableLiveData<UserData> user = new MutableLiveData<>();
-    public LiveData<UserData> getUser(){return user; }
-    void initUser(Context ctx){
-        try{
-            SharedPreferencesManager share  = new SharedPreferencesManager(ctx);
+    SharedPreferencesManager share;
 
-            String finalUid = auth.getCurrentUser().getUid();
-            if(finalUid!= null) {
-                FirebaseFirestore.getInstance().collection("users").document(finalUid)
-                        .get()
-                        .addOnCompleteListener(e -> {
-                            try {
-                                UserData d = UserData.fromMap(finalUid, e.getResult().getData());
-                                user.setValue(d);
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
+    public LiveData<UserData> getUser() {
+        return user;
+    }
 
-                        });
-            }else {
-                String uid = share.getUID();
-                FirebaseFirestore.getInstance().collection("users").document(uid)
-                        .get()
-                        .addOnCompleteListener(e -> {
-                            try {
-                                UserData d = UserData.fromMap(finalUid, e.getResult().getData());
-                                user.setValue(d);
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-
-                        });
+    void initUser(Context ctx) {
+        try {
+            share = new SharedPreferencesManager(ctx);
+            UserData u = share.getUserData();
+            if(u!= null){
+                user.setValue(u);
             }
 
-
-        }catch (Exception e){
-            Log.e("initUser",e.toString());}
+        } catch (Exception e) {
+            Log.e("initUser", e.toString());
+        }
     }
-    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+
 
     public LiveData<Product> getQuocPhong() {
         return quocPhongLiveData;
     }
+
     public LiveData<Product> getTheChat() {
         return theChatLiveData;
     }
 
     public void fetchProducts() {
-        try{
-            firestore.collection(DbCloud._quoc_phong).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
+        try {
+            List<Long> size = new ArrayList<>();
+            for (int i = 30; i < 43; i++) {
+                size.add((long) i);
+            }
+            Product product = new Product("đồng phục quốc phòng", size, 1000l, "đồng/ngày", "", "thuê ngay");
+            quocPhongLiveData.setValue(product);
+            Product product2 = new Product("đồng phục thể chất", size, 90000l, "đồng", "", "mua ngay");
+            theChatLiveData.setValue(product2);
 
-                    QuerySnapshot querySnapshot = task.getResult();
-                    if (querySnapshot != null) {
-                        if( querySnapshot.size()==1) {
-                            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                                Product product = Product.generate(document.getData());
-                                quocPhongLiveData.setValue(product);
-
-                            }
-                        }
-                    }
-
-                } else {
-                    // Handle the error
-                    quocPhongLiveData.setValue(null);
-                }
-            });
-            firestore.collection(DbCloud._the_chat).get().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-
-                    QuerySnapshot querySnapshot = task.getResult();
-                    if (querySnapshot != null) {
-                        if( querySnapshot.size()==1) {
-                            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                                Product product = Product.generate(document.getData());
-                                theChatLiveData.setValue(product);
-
-                            }
-                        }
-                    }
-
-                } else {
-                    // Handle the error
-                    theChatLiveData.setValue(null);
-                }
-            });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("can  load");
         }
